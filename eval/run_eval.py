@@ -141,12 +141,39 @@ def evaluate_single_question(
     query_db_id = None if catalog_mode else gold_db_id
 
     # 1. Run agent graph
-    state = run_agent(
-        question=question,
-        db_id=query_db_id,
-        config=config,
-        evidence=evidence,
-    )
+    try:
+        state = run_agent(
+            question=question,
+            db_id=query_db_id,
+            config=config,
+            evidence=evidence,
+        )
+    except Exception as exc:
+        logger.error("Agent run failed on question %s: %s", qid, exc)
+        return {
+            "qid": qid,
+            "db_id": gold_db_id,
+            "difficulty": difficulty,
+            "question": question,
+            "gold_sql": gold_sql,
+            "pred_sql": "",
+            "correct": False,
+            "multiset_match": False,
+            "valid_sql": False,
+            "attempts": 1,
+            "status": "failed",
+            "error_type": f"AGENT_RUN_ERROR: {str(exc)[:100]}",
+            "tokens_in": 0,
+            "tokens_out": 0,
+            "llm_calls": 1,
+            "latency_s": 0.0,
+            "cost_usd": 0.0,
+            "retrieved_tables": [],
+            "gold_tables": [],
+            "table_recall": 0.0,
+            "column_recall": 0.0,
+            "schema_truncated": False,
+        }
 
     pred_sql = state.get("sql", "").strip()
     attempts = state.get("attempts", 1)

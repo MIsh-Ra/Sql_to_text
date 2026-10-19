@@ -80,10 +80,20 @@ class CachedChatModel(BaseChatModel):
                 except Exception as exc:
                     if _is_rate_limit_error(exc) and retries < settings.llm_max_retries:
                         retries += 1
-                        jitter = random.uniform(0.1, 1.0)
-                        sleep_time = min(backoff + jitter, settings.llm_retry_max_wait)
+                        import re
+                        wait_hint = 0.0
+                        msg_str = str(exc).lower()
+                        match_s = re.search(r"try again in ([\d\.]+)s", msg_str)
+                        match_ms = re.search(r"try again in ([\d\.]+)ms", msg_str)
+                        if match_s:
+                            wait_hint = float(match_s.group(1)) + 1.5
+                        elif match_ms:
+                            wait_hint = (float(match_ms.group(1)) / 1000.0) + 1.5
+
+                        jitter = random.uniform(0.5, 2.0)
+                        sleep_time = max(wait_hint, min(backoff + jitter, settings.llm_retry_max_wait))
                         logger.warning(
-                            "Rate limit hit for %s/%s. Retry %d/%d after %.2fs. Error: %s",
+                            "Rate limit hit for %s/%s. Retry %d/%d sleeping %.2fs. Error: %s",
                             self.provider,
                             self.model_name,
                             retries,
@@ -92,7 +102,7 @@ class CachedChatModel(BaseChatModel):
                             exc,
                         )
                         time.sleep(sleep_time)
-                        backoff = min(backoff * 2.0, settings.llm_retry_max_wait)
+                        backoff = min(backoff * 1.5, settings.llm_retry_max_wait)
                     else:
                         raise
 

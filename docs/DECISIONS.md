@@ -47,3 +47,7 @@ This document records key design choices, library adaptations, and trade-offs ma
 ### DEC-010: State Machine Loop Guard and Checkpointing
 - **Context**: In an autonomous repair loop, LLMs occasionally repeat identical invalid queries, which wastes tokens and causes infinite loops without making progress.
 - **Decision**: Implemented an explicit loop guard in `app/graph.py`: if a repaired query matches any earlier attempt in `state["history"]`, the graph halts immediately and transitions to `fail`. The graph compiles with an SQLite checkpointer (`data/checkpoints.sqlite`), allowing session resumption and time-travel replay.
+
+### DEC-011: Prompt Freezing and Cryptographic Provenance
+- **Context**: To prevent evaluation contamination, prompts must never be tuned on evaluation test splits (`eval200`).
+- **Decision**: Prompts in `app/prompts.py` are strictly frozen. The SHA256 hash (`241cc2612ae4c7671cdcbebf7674ddf8fe4bf32e9f38bc1fb2da714153b0541d`) is recorded in the header of every evaluation run JSONL. `eval/aggregate.py` strictly refuses to aggregate any runs that do not share this exact hash.

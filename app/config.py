@@ -37,8 +37,8 @@ class Settings(BaseSettings):
     )
 
     # Rate Limiting & Concurrency
-    llm_concurrency: int = Field(default=4, description="Maximum concurrent LLM requests")
-    llm_max_retries: int = Field(default=5, description="Maximum retries with exponential backoff")
+    llm_concurrency: int = Field(default=2, description="Maximum concurrent LLM requests")
+    llm_max_retries: int = Field(default=15, description="Maximum retries with exponential backoff")
     llm_retry_min_wait: float = Field(default=1.0, description="Minimum backoff wait in seconds")
     llm_retry_max_wait: float = Field(default=60.0, description="Maximum backoff wait in seconds")
 
