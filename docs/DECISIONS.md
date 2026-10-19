@@ -35,3 +35,11 @@ This document records key design choices, library adaptations, and trade-offs ma
 ### DEC-007: Defense-in-Depth Execution Sandbox
 - **Context**: Executing LLM-generated SQL against SQLite must be safe from file modification, malicious extensions, infinite recursive loops, or PRAGMA attacks.
 - **Decision**: Opened databases via `file:///path?mode=ro`, installed `set_authorizer` granting solely `SQLITE_SELECT`, `SQLITE_READ`, `SQLITE_FUNCTION`, and `SQLITE_RECURSIVE`, and installed a progress handler checking timeouts every 500 virtual machine instructions. Fetched rows are capped without modifying SQL AST.
+
+### DEC-008: Dense + BM25 Hybrid Fusion with Reciprocal Rank Fusion (k=60)
+- **Context**: Relying purely on dense embeddings can miss exact keyword column and table matches, while pure BM25 fails to match semantic synonyms (e.g., "customer residence" matching "city").
+- **Decision**: Implemented hybrid retrieval using `BAAI/bge-small-en-v1.5` dense embeddings in Chroma and `rank_bm25` BM25Okapi, fusing rankings via Reciprocal Rank Fusion ($k=60$). Evaluated on Spider Dev 200, this yields 100.00% table recall and 99.37% on BIRD Mini 200, reducing schema tokens by 26.03% on BIRD.
+
+### DEC-009: Strict Cross-Domain Database Exclusion in Few-Shot Retrieval
+- **Context**: In benchmark evaluation, demonstrating few-shot examples from the same database being tested would constitute data leakage / in-domain contamination.
+- **Decision**: In `app/fewshot_index.py`, candidate examples are queried and strictly filtered out if `example.db_id == query.db_id`. Unit tests in `tests/test_retrieval.py` enforce that even the most semantically identical questions are discarded if they share the target database ID.
