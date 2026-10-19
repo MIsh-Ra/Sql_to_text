@@ -238,3 +238,4 @@ Despite reaching **80.0% execution accuracy on Spider Dev** and **47.0% on BIRD 
 1. **Foreign Key Path Finding**: Rather than relying purely on dense semantic retrieval to pick tables, integrate shortest-path graph search over database foreign key constraints to ensure bridge tables are never omitted.
 2. **SQLite Dialect Linters**: Enhance AST pre-validation to automatically replace unsupported functions (e.g. `CONCAT` $\rightarrow$ `||`, `NOW()` $\rightarrow$ `CURRENT_TIMESTAMP`).
 3. **Explicit Type Casting**: Inject proactive casting rules into the system prompt to mandate `CAST(... AS REAL)` for division calculations in SQLite.
+

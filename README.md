@@ -2,7 +2,7 @@
 
 # ⚡ Portfolio Text-to-SQL Agent
 
-**Enterprise-Grade Natural Language to SQL Agent with LangGraph Orchestration, Hybrid Retrieval (Dense + BM25 RRF), AST Qualification, and Self-Correction Sandboxing.**
+**A Text-to-SQL Agent with Hybrid Schema Retrieval, AST Sandboxing, and LangGraph Self-Correction Evaluated on Spider and BIRD Benchmarks.**
 
 [![CI Workflow](https://github.com/MIsh-Ra/Sql_to_text/actions/workflows/ci.yml/badge.svg)](https://github.com/MIsh-Ra/Sql_to_text/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
@@ -15,25 +15,25 @@
 
 ## 🎯 Headline Empirical Results
 
-Every metric reported below is generated from an exact, reproducible evaluation run on frozen 200-question subsets of **Spider Dev** and **BIRD Mini-Dev** (seed `42`, temperature `0.0`, evaluated with `openai/gpt-oss-120b` via Groq).
+Every metric reported below is generated from an evaluation run on frozen 200-question subsets of **Spider Dev** and **BIRD Mini-Dev** (seed `42`, temperature `0.0`, evaluated with `openai/gpt-oss-120b` via Groq).
 
 | Benchmark Subset | C0 Naive Baseline (Acc & 95% CI) | C4 Full Agent (Acc & 95% CI) | Execution Gain | McNemar Significance ($p$) | Valid SQL Rate |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Spider Dev (200 Qs)** | 75.0% [55.0%, 95.0%] | **80.0% [50.0%, 100.0%]** | **+5.0 pts** | $p = 1.0000$ | 100.0% $\rightarrow$ 100.0% |
-| **BIRD Mini-Dev (200 Qs)** | 37.5% [31.0%, 45.0%] | **47.0% [40.5%, 54.0%]** | **+9.5 pts** | **$p < 0.0001$** | 97.0% $\rightarrow$ 98.0% |
+| **Spider Dev (200 Qs)** | 72.5% [66.5%, 78.5%] | **80.5% [75.0%, 85.5%]** | **+8.0 pts** | $p < 0.0001$ ($b=16, c=0$) | 99.0% $\rightarrow$ 98.5% |
+| **BIRD Mini-Dev (200 Qs)** | 37.5% [31.0%, 45.0%] | **47.0% [40.5%, 54.0%]** | **+9.5 pts** | $p < 0.0001$ ($b=19, c=0$) | 97.0% $\rightarrow$ 98.0% |
 
 <p align="center">
   <img src="eval/results.png" alt="Empirical Benchmark Comparison" width="800"/>
 </p>
 
 > [!NOTE]
-> **Key Finding**: While single-prompt baselines perform adequately on clean academic schemas (Spider), real-world enterprise databases with hundreds of columns and non-obvious business rules (BIRD) defeat naive prompts. The C4 agent's **hybrid schema pruning**, **few-shot cross-database grounding**, and **multi-step AST repair loop** deliver a statistically significant **+9.5 point accuracy surge ($p < 0.0001$)** while cutting schema token overhead by **26%**.
+> **Key Finding**: While single-prompt baselines perform adequately on clean academic schemas (Spider), real-world databases with wide multi-table schemas and external evidence (BIRD) defeat naive prompts. The C4 agent's **hybrid schema pruning**, **few-shot cross-database grounding**, and **multi-step AST repair loop** deliver significant execution improvements (+8.0 pts on Spider, +9.5 pts on BIRD).
 
 ---
 
 ## 🏗️ Architecture & Orchestration
 
-The agent is implemented as a stateful, cyclical directed acyclic graph (DAG) using **LangGraph** with a **SqliteSaver** checkpointer.
+The agent is implemented as a stateful cyclical state machine using **LangGraph** with a **SqliteSaver** checkpointer.
 
 ```mermaid
 flowchart TD
@@ -67,20 +67,20 @@ flowchart TD
 
 Ablations isolating the impact of each subsystem on Spider Dev (200 Questions) and BIRD Mini-Dev (200 Questions):
 
-| Config | Description | Spider Dev Acc | BIRD Mini Acc | Valid SQL | Mean Attempts | Tokens (In / Out) | p50 / p95 Latency | Est. Cost / Q |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **C0** | Naive Single-Prompt Baseline | 75.0% | 37.5% | 100.0% | 1.00 | 411 / 181 | 4.9s / 31.2s | $0.0034 |
-| **C1** | Dense Schema Retrieval (`BAAI/bge-small-en-v1.5`) | 74.0% | N/A | 98.0% | 1.00 | 457 / 162 | 1.2s / 14.5s | $0.0332 |
-| **C2** | Hybrid Schema Retrieval (Dense + BM25, RRF $k=60$) | 75.5% | N/A | 94.5% | 1.00 | 457 / 162 | 1.3s / 15.9s | $0.0332 |
-| **C3** | Few-Shot Retrieval ($k=3$, strict database exclusion) | 77.0% | N/A | 97.0% | 1.00 | 457 / 162 | 1.6s / 18.6s | $0.0332 |
-| **C4** | **Full Agent (Hybrid Schema + Few-Shot + AST + Repair)** | **80.0%** | **47.0%** | **98.0%** | **1.00** | **738 / 225** | **4.8s / 35.8s** | **$0.0025** |
-| **L1** | *Ablation*: C4 without Schema Retrieval | 77.5% | N/A | 97.5% | 1.05 | 539 / 191 | 1.7s / 20.7s | $0.0391 |
-| **L2** | *Ablation*: C4 without Few-Shot Injection | 78.0% | N/A | 95.0% | 1.05 | 525 / 186 | 1.7s / 20.0s | $0.0381 |
-| **L3** | *Ablation*: C4 without Error Repair Loop | 75.5% | N/A | 97.0% | 1.00 | 457 / 162 | 1.4s / 16.6s | $0.0332 |
+| Config | Description | Spider Dev Acc | BIRD Mini Acc | Valid SQL | Mean Attempts | Tokens (In / Out) | p50 / p95 Latency |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **C0** | Naive Single-Prompt Baseline | 72.5% [66.5%, 78.5%] | 37.5% [31.0%, 45.0%] | 99.0% | 1.00 | 457 / 162 | 1.2s / 13.8s |
+| **C1** | Dense Schema Retrieval (`BAAI/bge-small-en-v1.5`) | 74.0% [68.0%, 80.0%] | N/A | 98.0% | 1.00 | 457 / 162 | 1.2s / 14.5s |
+| **C2** | Hybrid Schema Retrieval (Dense + BM25, RRF $k=60$) | 75.5% [69.5%, 81.0%] | N/A | 94.5% | 1.00 | 457 / 162 | 1.3s / 15.9s |
+| **C3** | Few-Shot Retrieval ($k=3$, strict database exclusion) | 77.0% [71.0%, 82.5%] | N/A | 97.0% | 1.00 | 457 / 162 | 1.6s / 18.6s |
+| **C4** | **Full Agent (Hybrid Schema + Few-Shot + AST + Repair)** | **80.5% [75.0%, 85.5%]** | **47.0% [40.5%, 54.0%]** | **98.5%** | **1.08** | **571 / 202** | **1.9s / 22.1s** |
+| **L1** | *Ablation*: C4 without Schema Retrieval | 77.5% [72.0%, 83.0%] | N/A | 97.5% | 1.05 | 539 / 191 | 1.7s / 20.7s |
+| **L2** | *Ablation*: C4 without Few-Shot Injection | 78.0% [72.5%, 83.0%] | N/A | 95.0% | 1.05 | 525 / 186 | 1.7s / 20.0s |
+| **L3** | *Ablation*: C4 without Error Repair Loop | 75.5% [69.5%, 81.0%] | N/A | 97.0% | 1.00 | 457 / 162 | 1.4s / 16.6s |
 
 ---
 
-## 🛡️ Production Security & Sandbox Engineering
+## 🛡️ Security & Sandbox Engineering
 
 All generated SQL statements are treated as **untrusted, hostile input**:
 1. **URI-Level Read-Only Mount**: SQLite connections are opened with `mode=ro` (`file:///path?mode=ro`).
@@ -199,3 +199,4 @@ This project is open-source software licensed under the [MIT License](LICENSE).
 - **Spider Benchmark**: Yale University (Yu et al., EMNLP 2018).
 - **BIRD Benchmark**: University of Hong Kong & Alibaba DAMO Academy (Li et al., NeurIPS 2023).
 - **Embeddings**: `BAAI/bge-small-en-v1.5` by Beijing Academy of Artificial Intelligence.
+

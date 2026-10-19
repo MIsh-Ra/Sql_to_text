@@ -173,6 +173,10 @@ def aggregate_results(results_dir: Path = Path("./eval/results")) -> Path:
         header, records = parse_run_file(fpath)
         if not header or not records:
             continue
+        # Strictly evaluate eval200 benchmark files to prevent tune sets from overwriting results
+        if header.get("subset") != "eval200":
+            logger.info("Skipping non-eval200 run: %s (subset=%s)", fpath.name, header.get("subset"))
+            continue
         headers.append(header)
         runs_data.append({
             "file": fpath.name,
@@ -290,10 +294,10 @@ def aggregate_results(results_dir: Path = Path("./eval/results")) -> Path:
     # 2. Comprehensive Ablation Table
     md_lines.append("## Complete Ablation Study\n")
     md_lines.append(
-        "| Config | Description | Spider Dev (Acc & CI) | BIRD Mini (Acc & CI) | Valid SQL | Mean Attempts | Mean Tokens (In / Out) | p50 / p95 Latency | Est. Cost |"
+        "| Config | Description | Spider Dev (Acc & CI) | BIRD Mini (Acc & CI) | Valid SQL | Mean Attempts | Mean Tokens (In / Out) | p50 / p95 Latency |"
     )
     md_lines.append(
-        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |"
+        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |"
     )
 
     config_descriptions = {
@@ -321,16 +325,15 @@ def aggregate_results(results_dir: Path = Path("./eval/results")) -> Path:
             att = f"{primary['mean_attempts']:.2f}"
             tok = f"{int(primary['mean_tokens_in'])} / {int(primary['mean_tokens_out'])}"
             lat = f"{primary['p50_latency_s']:.1f}s / {primary['p95_latency_s']:.1f}s"
-            cost = f"${primary['total_cost_usd']:.4f}"
         else:
-            val_rate = att = tok = lat = cost = "N/A"
+            val_rate = att = tok = lat = "N/A"
 
-        md_lines.append(f"| **{cfg}** | {desc} | {sp_acc} | {bd_acc} | {val_rate} | {att} | {tok} | {lat} | {cost} |")
+        md_lines.append(f"| **{cfg}** | {desc} | {sp_acc} | {bd_acc} | {val_rate} | {att} | {tok} | {lat} |")
 
     # 3. Paired Significance Tests Table
     md_lines.append("\n## Statistical Significance Tests (Paired on Matching Question IDs)\n")
-    md_lines.append("| Comparison | Dataset | Paired Mean Diff (pts) | 95% Bootstrap CI | McNemar p-value | Significant (p < 0.05) |")
-    md_lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
+    md_lines.append("| Comparison | Dataset | Paired Mean Diff (pts) | 95% Bootstrap CI | Discordant Pairs (b / c) | McNemar p-value | Significant (p < 0.05) |")
+    md_lines.append("| :--- | :--- | :--- | :--- | :--- | :--- | :--- |")
 
     comparisons = [
         ("C0 vs C4 (Full Agent Gain)", "C0", "C4"),
@@ -357,7 +360,7 @@ def aggregate_results(results_dir: Path = Path("./eval/results")) -> Path:
                 sig = "Yes" if p_mcnemar < 0.05 else "No"
                 p_disp = f"{p_mcnemar:.4f}" if p_mcnemar >= 0.0001 else "< 0.0001"
                 md_lines.append(
-                    f"| {label} | {ds.capitalize()} | {diff*100:+.1f} | [{lo*100:+.1f}, {hi*100:+.1f}] | {p_disp} | **{sig}** |"
+                    f"| {label} | {ds.capitalize()} | {diff*100:+.1f} | [{lo*100:+.1f}, {hi*100:+.1f}] | b={b}, c={c} | {p_disp} | **{sig}** |"
                 )
 
     # 4. Per-Difficulty Breakdown Table
@@ -382,19 +385,16 @@ def aggregate_results(results_dir: Path = Path("./eval/results")) -> Path:
             )
 
     # 5. Retrieval & Catalog Mode Table
-    md_lines.append("\n## Schema Retrieval & Catalog Mode Performance\n")
-    md_lines.append("| Benchmark Subset | Retrieval Mode | Table Recall@k | Column Recall@k | Mean Schema Tokens | Token Reduction |")
-    md_lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
+    md_lines.append("\n## Schema Retrieval Performance\n")
+    md_lines.append("| Benchmark Subset | Retrieval Mode | Table Recall@k | Column Recall@k | Mean Schema Tokens |")
+    md_lines.append("| :--- | :--- | :--- | :--- | :--- |")
 
     for ds, name in [("spider", "Spider Dev 200"), ("bird", "BIRD Mini 200")]:
-        c0 = processed_runs.get(ds, {}).get("C0")
         c2 = processed_runs.get(ds, {}).get("C2")
-        if c0 and c2:
-            base_tok = c0["mean_tokens_in"]
+        if c2:
             ret_tok = c2["mean_tokens_in"]
-            reduc = ((base_tok - ret_tok) / base_tok) * 100.0 if base_tok > 0 else 0.0
             md_lines.append(
-                f"| {name} | Hybrid (Dense + BM25, RRF) | **{c2['mean_table_recall']*100:.2f}%** | {c2['mean_column_recall']*100:.2f}% | {int(ret_tok)} (vs {int(base_tok)} full) | **{reduc:.1f}%** |"
+                f"| {name} | Hybrid (Dense + BM25, RRF) | **{c2['mean_table_recall']*100:.2f}%** | {c2['mean_column_recall']*100:.2f}% | {int(ret_tok)} tokens |"
             )
 
     output_md_path = Path("./eval/results.md")
