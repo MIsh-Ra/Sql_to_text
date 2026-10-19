@@ -1,0 +1,502 @@
+[
+  {
+    "qid": "bird_mini_775",
+    "original_id": 775,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "challenging",
+    "question": "What is the percentage of blue female superheroes among all female superheroes?",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
+    "evidence": "percentage = MULTIPLY(DIVIDE(SUM(colour = 'Blue' WHERE gender = 'Female'), COUNT(gender = 'Female')), 100); blue refers to the color = 'Blue' WHERE skin_colour_id = colour.id; female refers to gender = 'Female';"
+  },
+  {
+    "qid": "bird_mini_128",
+    "original_id": 128,
+    "dataset": "bird",
+    "db_id": "financial",
+    "difficulty": "moderate",
+    "question": "List the top nine districts, by descending order, from the highest to the lowest, the number of female account holders.",
+    "gold_sql": "SELECT T2.A2, COUNT(T1.client_id) FROM client AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.gender = 'F' GROUP BY T2.district_id, T2.A2 ORDER BY COUNT(T1.client_id) DESC LIMIT 9",
+    "evidence": "A2 refers to districts; Female refers to gender = 'F'"
+  },
+  {
+    "qid": "bird_mini_1139",
+    "original_id": 1139,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "challenging",
+    "question": "What was the final score for the match on September 24, 2008, in the Belgian Jupiler League between the home team and the away team?",
+    "gold_sql": "SELECT t2.home_team_goal, t2.away_team_goal FROM League AS t1 INNER JOIN Match AS t2 ON t1.id = t2.league_id WHERE t1.name = 'Belgium Jupiler League' AND t2.`date` LIKE '2008-09-24%'",
+    "evidence": "September 24, 2008 refers to date like '2008-09-24%'; in the Belgian Jupiler League refers to League.name = 'Belgium Jupiler League'; final score for home team refers to home_team_goal; final score for away team refers to away_team_goal"
+  },
+  {
+    "qid": "bird_mini_479",
+    "original_id": 479,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "moderate",
+    "question": "Among the cards with converted mana cost higher than 5 in the set Coldsnap, how many of them have unknown power?",
+    "gold_sql": "SELECT SUM(CASE WHEN T1.power = '*' OR T1.power IS NULL THEN 1 ELSE 0 END) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap' AND T1.convertedManaCost > 5",
+    "evidence": "card set Coldsnap refers to name = 'Coldsnap'; converted mana cost higher than 5 refers to convertedManaCost > 5; unknown power refers to power = '*' or T1.power is null"
+  },
+  {
+    "qid": "bird_mini_213",
+    "original_id": 213,
+    "dataset": "bird",
+    "db_id": "toxicology",
+    "difficulty": "moderate",
+    "question": "What type of bond is there between the atoms TR004_8 and TR004_20?",
+    "gold_sql": "SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR004_8' AND T2.atom_id2 = 'TR004_20' OR T2.atom_id2 = 'TR004_8' AND T2.atom_id = 'TR004_20'",
+    "evidence": "type of bond refers to bond_type; between the atoms TR004_8 and TR004_20 refers to atom_id = 'TR004_8' AND atom_id2 = 'TR004_20' OR another way around"
+  },
+  {
+    "qid": "bird_mini_766",
+    "original_id": 766,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "What is the hero's full name with the highest attribute in strength?",
+    "gold_sql": "SELECT T1.full_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id WHERE T3.attribute_name = 'Strength' ORDER BY T2.attribute_value DESC LIMIT 1",
+    "evidence": "highest attribute in strength refers to MAX(attribute_value) WHERE attribute_name = 'strength';"
+  },
+  {
+    "qid": "bird_mini_1371",
+    "original_id": 1371,
+    "dataset": "bird",
+    "db_id": "student_club",
+    "difficulty": "simple",
+    "question": "How many members attended the \"Women's Soccer\" event?",
+    "gold_sql": "SELECT COUNT(T2.link_to_member) FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event WHERE T1.event_name = 'Women''s Soccer'",
+    "evidence": "'Women's Soccer' is the event name;"
+  },
+  {
+    "qid": "bird_mini_1088",
+    "original_id": 1088,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "question": "Please list the names of the players whose volley score and dribbling score are over 70.",
+    "gold_sql": "SELECT DISTINCT t1.player_name FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE t2.volleys > 70 AND t2.dribbling > 70",
+    "evidence": "volley score are over 70 refers to volleys > 70; dribbling score refers to dribbling are over 70 refers to dribbling > 70;"
+  },
+  {
+    "qid": "bird_mini_1352",
+    "original_id": 1352,
+    "dataset": "bird",
+    "db_id": "student_club",
+    "difficulty": "moderate",
+    "question": "For all the club members from \"Business\" major, how many of them wear medium size t-shirt?",
+    "gold_sql": "SELECT COUNT(T1.member_id) FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T2.major_name = 'Business' AND T1.t_shirt_size = 'Medium'",
+    "evidence": "'Business' is a major name; wear medium size t-shirt refers to t_shirt_size = 'Medium'"
+  },
+  {
+    "qid": "bird_mini_532",
+    "original_id": 532,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "simple",
+    "question": "Please list the display names of all the users whose accounts were created in the year 2011.",
+    "gold_sql": "SELECT DisplayName FROM users WHERE STRFTIME('%Y', CreationDate) = '2011'",
+    "evidence": "account created in the year 2011 refers to year(CreationDate) = 2011"
+  },
+  {
+    "qid": "bird_mini_1152",
+    "original_id": 1152,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "moderate",
+    "question": "What is the ratio of outpatient to inpatient followed up treatment among all the 'SLE' diagnosed patient?",
+    "gold_sql": "SELECT SUM(CASE WHEN Admission = '+' THEN 1.0 ELSE 0 END) / SUM(CASE WHEN Admission = '-' THEN 1 ELSE 0 END) FROM Patient WHERE Diagnosis = 'SLE'",
+    "evidence": "'SLE' diagnosed patient means Diagnosis = 'SLE'; inpatient refers to Admission = '+'; outpatient refers to Admission = '-'; calculation =  DIVIDE(COUNT(ID) where Diagnosis = 'SLE' and Admission = '+', COUNT(ID) where Diagnosis = 'SLE' and Admission = '-')"
+  },
+  {
+    "qid": "bird_mini_846",
+    "original_id": 846,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "moderate",
+    "question": "Please list the reference names of the drivers who are eliminated in the first period in race number 20.",
+    "gold_sql": "SELECT T2.driverRef FROM qualifying AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 20 ORDER BY T1.q1 DESC LIMIT 5",
+    "evidence": "driver reference name refers to driverRef; first qualifying period refers to q1; drivers who are eliminated in the first qualifying period refers to 5 drivers with MAX(q1); race number refers to raceId;"
+  },
+  {
+    "qid": "bird_mini_239",
+    "original_id": 239,
+    "dataset": "bird",
+    "db_id": "toxicology",
+    "difficulty": "simple",
+    "question": "How many connections does the atom 19 have?",
+    "gold_sql": "SELECT COUNT(T.bond_id) FROM connected AS T WHERE SUBSTR(T.atom_id, -2) = '19'",
+    "evidence": "connections refers to bond_id; atom 19 refers to atom_id like 'TR%_19';"
+  },
+  {
+    "qid": "bird_mini_346",
+    "original_id": 346,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "moderate",
+    "question": "List all the card id and artist with unknown power which are legal for commander play format.",
+    "gold_sql": "SELECT T1.id, T1.artist FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.status = 'Legal' AND T2.format = 'commander' AND (T1.power IS NULL OR T1.power = '*')",
+    "evidence": "unknown power refers to power = '*' or POWER IS NULL; commander play format refers to format = 'commander'; legal for commander play format refers to format = 'commander' where status = 'Legal'"
+  },
+  {
+    "qid": "bird_mini_149",
+    "original_id": 149,
+    "dataset": "bird",
+    "db_id": "financial",
+    "difficulty": "challenging",
+    "question": "Please list the account types that are not eligible for loans, and the average income of residents in the district where the account is located exceeds $8000 but is no more than $9000.",
+    "gold_sql": "SELECT T3.type FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T2.account_id = T3.account_id WHERE T3.type != 'OWNER' AND T1.A11 BETWEEN 8000 AND 9000",
+    "evidence": "A11 represents the average salary; Salary and income share the similar meanings; when the account type = 'OWNER', it's eligible for loans"
+  },
+  {
+    "qid": "bird_mini_1505",
+    "original_id": 1505,
+    "dataset": "bird",
+    "db_id": "debit_card_specializing",
+    "difficulty": "simple",
+    "question": "Among the customers who paid in euro, how many of them have a monthly consumption of over 1000?",
+    "gold_sql": "SELECT COUNT(*) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'EUR' AND T1.Consumption > 1000.00",
+    "evidence": "Pays in euro = Currency = 'EUR'."
+  },
+  {
+    "qid": "bird_mini_866",
+    "original_id": 866,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "moderate",
+    "question": "Who was the player that got the lap time of 0:01:27 in the race No. 161? Show his introduction website.",
+    "gold_sql": "SELECT DISTINCT T2.forename, T2.surname, T2.url FROM lapTimes AS T1 INNER JOIN drivers AS T2 ON T2.driverId = T1.driverId WHERE T1.raceId = 161 AND T1.time LIKE '1:27%'",
+    "evidence": "player and driver are synonyms; the lap time of 0:0M:SS refers to lapTime.time LIKE 'M:SS%';race number refers to raceId; introduction website of the drivers refers to url;"
+  },
+  {
+    "qid": "bird_mini_788",
+    "original_id": 788,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "challenging",
+    "question": "How many percent of female heroes were published by Marvel Comics?",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.gender = 'Female' AND T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) / COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) * 100 FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN gender AS T3 ON T1.gender_id = T3.id",
+    "evidence": "percent = MULTIPLY(DIVIDE(SUM(gender = 'Female' WHERE publisher_name = 'Marvel Comics'), COUNT(publisher_name = 'Marvel Comics')), 100); female heroes refers to gender = 'Female'; Marvel Comics refers to publisher_name = 'Marvel Comics';"
+  },
+  {
+    "qid": "bird_mini_397",
+    "original_id": 397,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "moderate",
+    "question": "What is the mana cost of cards with a normal layout, a 2003 frame version, with a black border color, and available in paper and mtgo?",
+    "gold_sql": "SELECT manaCost FROM cards WHERE availability = 'mtgo,paper' AND borderColor = 'black' AND frameVersion = 2003 AND layout = 'normal'",
+    "evidence": "available in paper and mtgo refers to availability = 'mtgo,paper'; frameVersion = 2003;borderColor = 'black'"
+  },
+  {
+    "qid": "bird_mini_531",
+    "original_id": 531,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "simple",
+    "question": "Which user has a higher reputation, Harlan or Jarrod Dixon?",
+    "gold_sql": "SELECT DisplayName FROM users WHERE DisplayName IN ('Harlan', 'Jarrod Dixon') AND Reputation = ( SELECT MAX(Reputation) FROM users WHERE DisplayName IN ('Harlan', 'Jarrod Dixon') )",
+    "evidence": "\"Harlan\" and \"Jarrod Dixon\" are both DisplayName; highest reputation refers to Max(Reputation)"
+  },
+  {
+    "qid": "bird_mini_1334",
+    "original_id": 1334,
+    "dataset": "bird",
+    "db_id": "student_club",
+    "difficulty": "simple",
+    "question": "List the full name of the Student_Club members that grew up in Illinois state.",
+    "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+    "evidence": "full name of member refers to first_name, last_name"
+  },
+  {
+    "qid": "bird_mini_1524",
+    "original_id": 1524,
+    "dataset": "bird",
+    "db_id": "debit_card_specializing",
+    "difficulty": "simple",
+    "question": "What's the nationality of the customer who spent 548.4 in 2012/8/24?",
+    "gold_sql": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Price  = 548.4",
+    "evidence": "'2012/8/24' can be represented by '2012-08-24'"
+  },
+  {
+    "qid": "bird_mini_341",
+    "original_id": 341,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "simple",
+    "question": "What are the borderless cards available without powerful foils?",
+    "gold_sql": "SELECT id FROM cards WHERE borderColor = 'borderless' AND (cardKingdomId IS NULL OR cardKingdomId IS NULL)",
+    "evidence": "borderless' refers to borderColor; poweful foils refers to cardKingdomFoilId paired with cardKingdomId AND cardKingdomId is not null"
+  },
+  {
+    "qid": "bird_mini_281",
+    "original_id": 281,
+    "dataset": "bird",
+    "db_id": "toxicology",
+    "difficulty": "challenging",
+    "question": "Tally the toxicology element of the 4th atom of each molecule that was carcinogenic.",
+    "gold_sql": "SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND SUBSTR(T1.atom_id, -1) = '4' AND LENGTH(T1.atom_id) = 7",
+    "evidence": "label = '+' means molecules are carcinogenic; 4th atom of each molecule refers to substr(atom_id, 7, 1) = '4'; "
+  },
+  {
+    "qid": "bird_mini_797",
+    "original_id": 797,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "Which superheroes have blue eyes with brown hair?",
+    "gold_sql": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id WHERE T2.colour = 'Blue' AND T3.colour = 'Brown'",
+    "evidence": "which superheroes refers to superhero_name; blue eyes refers to color = 'Blue' and color.id = eye_colour_id; brown hair refers to color = 'Brown' and color.id = hair_colour_id;"
+  },
+  {
+    "qid": "bird_mini_786",
+    "original_id": 786,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "How many heroes have the highest attribute value in strength?",
+    "gold_sql": "SELECT COUNT(T1.hero_id) FROM hero_attribute AS T1 INNER JOIN attribute AS T2 ON T1.attribute_id = T2.id WHERE T2.attribute_name = 'Strength' AND T1.attribute_value = ( SELECT MAX(attribute_value) FROM hero_attribute )",
+    "evidence": "highest attribute value in strength refers to MAX(attribute_value) WHERE attribute_name = 'Strength';"
+  },
+  {
+    "qid": "bird_mini_1028",
+    "original_id": 1028,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "challenging",
+    "question": "In Scotland Premier League, which away team won the most during the 2010 season?",
+    "gold_sql": "SELECT teamInfo.team_long_name FROM League AS leagueData INNER JOIN Match AS matchData ON leagueData.id = matchData.league_id INNER JOIN Team AS teamInfo ON matchData.away_team_api_id = teamInfo.team_api_id WHERE leagueData.name = 'Scotland Premier League' AND matchData.season = '2009/2010' AND matchData.away_team_goal - matchData.home_team_goal > 0 GROUP BY matchData.away_team_api_id ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": "Final result should return the Team.team_long_name; Scotland Premier League refers to League.name = 'Scotland Premier League'; away team refers to away_team_api_id; away team that won the most refers to MAX(SUBTRACT(away_team_goal, home_team_goal) > 0); 2010 season refers to season = '2009/2010'; won the most refers to MAX(COUNT(*));"
+  },
+  {
+    "qid": "bird_mini_1179",
+    "original_id": 1179,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "moderate",
+    "question": "For the patient who was diagnosed with SLE on 1994/2/19, what was his/her anti-Cardiolipin antibody concentration status on 1993/11/12?",
+    "gold_sql": "SELECT `aCL IgA`, `aCL IgG`, `aCL IgM` FROM Examination WHERE ID IN ( SELECT ID FROM Patient WHERE Diagnosis = 'SLE' AND Description = '1994-02-19' ) AND `Examination Date` = '1993-11-12'",
+    "evidence": "diagnosed with SLE refers to Diagnosis = 'SLE'; 1994/2/19 refers to Description = '1994-02-19'; anti-Cardiolipin refers to aCL IgM; 1993/11/12 refers to Examination Date = '1993/11/12'"
+  },
+  {
+    "qid": "bird_mini_1175",
+    "original_id": 1175,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "moderate",
+    "question": "How old was the patient who had the highest hemoglobin count at the time of the examination, and what is the doctor's diagnosis?",
+    "gold_sql": "SELECT STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday), T1.Diagnosis FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID ORDER BY T2.HGB DESC LIMIT 1",
+    "evidence": "How old the patient refers to SUBTRACT(year(`Examination Date`), year(Birthday)); the highest hemoglobin count refers to MAX(HGB)"
+  },
+  {
+    "qid": "bird_mini_733",
+    "original_id": 733,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "How many gold-eyed superheroes did Marvel Comics publish?",
+    "gold_sql": "SELECT COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN colour AS T3 ON T1.eye_colour_id = T3.id WHERE T2.publisher_name = 'Marvel Comics' AND T3.colour = 'Gold'",
+    "evidence": "gold-eyed refers to colour = 'Gold' where eye_colour_id = colour.id; superheroes that Marvel Comics published refers to publisher_name = 'Marvel Comics'"
+  },
+  {
+    "qid": "bird_mini_896",
+    "original_id": 896,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "challenging",
+    "question": "Calculate the percentage whereby Hamilton was not at the 1st track of the the f1 circuit since 2010.",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.position <> 1 THEN T2.position END) AS REAL) * 100 / COUNT(T2.driverStandingsId) FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.surname = 'Hamilton' AND T1.year >= 2010",
+    "evidence": "percentage = DIVIDE(COUNT(raceId) where surname = 'Hamilton' and position>1), (COUNT(raceId) where surname = 'Hamilton'); since 2010 refers to year >= 2010"
+  },
+  {
+    "qid": "bird_mini_875",
+    "original_id": 875,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "simple",
+    "question": "Show me the season page of year when the race No. 901 took place.",
+    "gold_sql": "SELECT T2.url FROM races AS T1 INNER JOIN seasons AS T2 ON T2.year = T1.year WHERE T1.raceId = 901",
+    "evidence": "the season page refers to url; race number refers to raceId;"
+  },
+  {
+    "qid": "bird_mini_765",
+    "original_id": 765,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "simple",
+    "question": "How many heroes have stealth power?",
+    "gold_sql": "SELECT COUNT(T1.hero_id) FROM hero_power AS T1 INNER JOIN superpower AS T2 ON T1.power_id = T2.id WHERE T2.power_name = 'Stealth'",
+    "evidence": "stealth power refers to power_name = 'Stealth';"
+  },
+  {
+    "qid": "bird_mini_1490",
+    "original_id": 1490,
+    "dataset": "bird",
+    "db_id": "debit_card_specializing",
+    "difficulty": "moderate",
+    "question": "How many percent of LAM customer consumed more than 46.73?",
+    "gold_sql": "SELECT CAST(SUM(IIF(T2.Consumption > 46.73, 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM'",
+    "evidence": "Percentage of LAM customer consumed more than 46.73 = (Total no. of LAM customers who consumed more than 46.73 / Total no. of LAM customers) * 100."
+  },
+  {
+    "qid": "bird_mini_1251",
+    "original_id": 1251,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "simple",
+    "question": "How many patients with an Ig G higher than normal?",
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG >= 2000",
+    "evidence": "Ig G higher than normal refers to IGG >= 2000; Should consider DISTINCT in the final result;"
+  },
+  {
+    "qid": "bird_mini_665",
+    "original_id": 665,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "moderate",
+    "question": "What is the average monthly number of links created in 2010 for posts that have no more than 2 answers?",
+    "gold_sql": "SELECT CAST(COUNT(T1.Id) AS REAL) / 12 FROM postLinks AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id WHERE T2.AnswerCount <= 2 AND STRFTIME('%Y', T1.CreationDate) = '2010'",
+    "evidence": "calculation = DIVIDE(COUNT(Id where YEAR(CreationDate) = 2010 and AnswerCount < = 2), 12)"
+  },
+  {
+    "qid": "bird_mini_850",
+    "original_id": 850,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "simple",
+    "question": "Please give the name of the race held on the circuits in Germany.",
+    "gold_sql": "SELECT DISTINCT T2.name FROM circuits AS T1 INNER JOIN races AS T2 ON T2.circuitID = T1.circuitId WHERE T1.country = 'Germany'",
+    "evidence": "Germany is a name of country;"
+  },
+  {
+    "qid": "bird_mini_1525",
+    "original_id": 1525,
+    "dataset": "bird",
+    "db_id": "debit_card_specializing",
+    "difficulty": "simple",
+    "question": "What is the percentage of the customers who used EUR in 2012/8/25?",
+    "gold_sql": "SELECT CAST(SUM(IIF(T2.Currency = 'EUR', 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-25'",
+    "evidence": "'2012/8/25' can be represented by '2012-08-25'"
+  },
+  {
+    "qid": "bird_mini_1472",
+    "original_id": 1472,
+    "dataset": "bird",
+    "db_id": "debit_card_specializing",
+    "difficulty": "moderate",
+    "question": "In 2012, who had the least consumption in LAM?",
+    "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+    "evidence": "Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year."
+  },
+  {
+    "qid": "bird_mini_1079",
+    "original_id": 1079,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "simple",
+    "question": "Which player is the tallest?",
+    "gold_sql": "SELECT player_name FROM Player ORDER BY height DESC LIMIT 1",
+    "evidence": "tallest player refers to MAX(height);"
+  },
+  {
+    "qid": "bird_mini_1103",
+    "original_id": 1103,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "question": "What was the overall rating for Aaron Mooy on 2016/2/4?",
+    "gold_sql": "SELECT t2.overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t2.`date`, 1, 10) = '2016-02-04' AND t1.player_name = 'Aaron Mooy'",
+    "evidence": "Aaron Mooy refers to player_name = 'Aaron Mooy'; on 2016/2/4 refers to date LIKE '2016-02-04%';"
+  },
+  {
+    "qid": "bird_mini_637",
+    "original_id": 637,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "moderate",
+    "question": "State all the tags used by Mark Meckes in his posts that doesn't have comments.",
+    "gold_sql": "SELECT T3.Tags FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T3.Id = T2.PostId WHERE T1.DisplayName = 'Mark Meckes' AND T3.CommentCount = 0",
+    "evidence": "used by Mark Meckes refers to DisplayName = 'Mark Meckes'; Doen't have comments refers to CommentCount = 0;"
+  },
+  {
+    "qid": "bird_mini_1390",
+    "original_id": 1390,
+    "dataset": "bird",
+    "db_id": "student_club",
+    "difficulty": "moderate",
+    "question": "Based on the total cost for all event, what is the percentage of cost for Yearly Kickoff event?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.event_name = 'Yearly Kickoff' THEN T3.cost ELSE 0 END) AS REAL) * 100 / SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget",
+    "evidence": "percentage = DIVIDE(SUM(cost where event_name = 'Yearly Kickoff'), SUM(cost)) * 100"
+  },
+  {
+    "qid": "bird_mini_753",
+    "original_id": 753,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "Among the superheroes with height from 170 to 190, list the names of the superheroes with no eye color.",
+    "gold_sql": "SELECT DISTINCT T1.superhero_name FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id WHERE T1.height_cm BETWEEN 170 AND 190 AND T2.colour = 'No Colour'",
+    "evidence": "height from 170 to 190 refers to height_cm BETWEEN 170 AND 190; no eye color refers to colour = 'No Colour'"
+  },
+  {
+    "qid": "bird_mini_487",
+    "original_id": 487,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "challenging",
+    "question": "What is the percentage of incredibly powerful cards in the set Coldsnap?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.cardKingdomFoilId IS NOT NULL AND T1.cardKingdomId IS NOT NULL THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+    "evidence": "card set Coldsnap refers to name = 'Coldsnap'; foil is incredibly powerful refers to cardKingdomFoilId is not null AND cardKingdomId is not null; the percentage of incredibly powerful cards in the set refers to DIVIDE(SUM(incredibly powerful), SUM(name = 'Coldsnap'))*100"
+  },
+  {
+    "qid": "bird_mini_730",
+    "original_id": 730,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "challenging",
+    "question": "List the superheroes from Marvel Comics who have the super power of 'Super Strength'.",
+    "gold_sql": "SELECT superhero_name FROM superhero AS T1 WHERE EXISTS (SELECT 1 FROM hero_power AS T2 INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T3.power_name = 'Super Strength' AND T1.id = T2.hero_id)AND EXISTS (SELECT 1 FROM publisher AS T4 WHERE T4.publisher_name = 'Marvel Comics' AND T1.publisher_id = T4.id)",
+    "evidence": "the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comics'; super power of \"Super Strength\" refers to power_name = 'Super Strength';"
+  },
+  {
+    "qid": "bird_mini_1270",
+    "original_id": 1270,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "challenging",
+    "question": "Among the patients who has a normal anti-scl70, how many of them are female and does not have any symptom?",
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE (T2.SC170 = 'negative' OR T2.SC170 = '0') AND T1.SEX = 'F' AND T3.Symptoms IS NULL",
+    "evidence": "normal anti-scl70 refers to SC170 IN('negative', '0'); female refers to Sex = 'F'; does not have any symptom refers to symptoms IS NULL; Should consider DISTINCT in the final result;"
+  },
+  {
+    "qid": "bird_mini_1148",
+    "original_id": 1148,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "question": "What is the percentage of players that are under 180 cm who have an overall strength of more than 70?",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN t2.overall_rating > 70  AND t1.height < 180 THEN t1.id ELSE NULL END) AS REAL) * 100 / COUNT(t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id ",
+    "evidence": "percentage refers to DIVIDE(COUNT(height < 180 AND overall_rating > 70),COUNT(id)) * 100"
+  },
+  {
+    "qid": "bird_mini_902",
+    "original_id": 902,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "simple",
+    "question": "Which race was Alex Yoong in when he was in track number less than 20?",
+    "gold_sql": "SELECT T1.name FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.forename = 'Alex' AND T3.surname = 'Yoong' AND T2.position < 20",
+    "evidence": "Alex Yoong refers to the full name of the driver; Full name of the driver refers to drivers.forename and drivers.surname;track number less than 10 refers to position < 20"
+  },
+  {
+    "qid": "bird_mini_728",
+    "original_id": 728,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "Rank superheroes from Marvel Comics by their eye color popularity, starting with the most common color.",
+    "gold_sql": "SELECT colour.colour AS EyeColor, COUNT(superhero.id) AS Count, RANK() OVER (ORDER BY COUNT(superhero.id) DESC) AS PopularityRank FROM superhero INNER JOIN colour ON superhero.eye_colour_id = colour.id INNER JOIN publisher ON superhero.publisher_id = publisher.id WHERE publisher.publisher_name = 'Marvel Comics' GROUP BY colour.colour",
+    "evidence": "the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comics'; most common color refers to COUNT(superhero.id) DESC;"
+  }
+]

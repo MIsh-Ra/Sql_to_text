@@ -1,0 +1,502 @@
+[
+  {
+    "qid": "spider_dev_639",
+    "original_id": 639,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "find the pixel aspect ratio and nation of the tv channels that do not use English.",
+    "gold_sql": "SELECT Pixel_aspect_ratio_PAR ,  country FROM tv_channel WHERE LANGUAGE != 'English'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_268",
+    "original_id": 268,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "medium",
+    "question": "How many shops are there in each location?",
+    "gold_sql": "SELECT count(*) ,  LOCATION FROM shop GROUP BY LOCATION",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_608",
+    "original_id": 608,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "For each language, list the number of TV Channels that use it.",
+    "gold_sql": "SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_292",
+    "original_id": 292,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "easy",
+    "question": "What is all the information about hiring?",
+    "gold_sql": "SELECT * FROM hiring",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_783",
+    "original_id": 783,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "hard",
+    "question": "Return the codes of countries that do not speak English and do not have Republics for governments.",
+    "gold_sql": "SELECT Code FROM country WHERE GovernmentForm != \"Republic\" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_620",
+    "original_id": 620,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "easy",
+    "question": "When did the episode \"A Love of a Lifetime\" air?",
+    "gold_sql": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_929",
+    "original_id": 929,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Give me the id, role and email of the professionals who did not perform any treatment on dogs.",
+    "gold_sql": "SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_481",
+    "original_id": 481,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "Find the number of matches happened in each year.",
+    "gold_sql": "SELECT count(*) ,  YEAR FROM matches GROUP BY YEAR",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_140",
+    "original_id": 140,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "What is the maximum accelerate for all the different cylinders?",
+    "gold_sql": "SELECT max(Accelerate) ,  Cylinders FROM CARS_DATA GROUP BY Cylinders;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_43",
+    "original_id": 43,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "hard",
+    "question": "Find the number of concerts happened in the stadium with the highest capacity .",
+    "gold_sql": "select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_360",
+    "original_id": 360,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Count the number of paragraphs in the document named 'Summer Show'.",
+    "gold_sql": "SELECT count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_ID  =  T2.document_ID WHERE T2.document_name  =  'Summer Show'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_441",
+    "original_id": 441,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "easy",
+    "question": "find the number of distinct country codes of all players.",
+    "gold_sql": "SELECT count(DISTINCT country_code) FROM players",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_631",
+    "original_id": 631,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "Find the package choice and series name of the TV channel that has high definition TV.",
+    "gold_sql": "SELECT package_option ,  series_name FROM TV_Channel WHERE hight_definition_TV  =  \"yes\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_373",
+    "original_id": 373,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "extra",
+    "question": "What is the document id and name with greatest number of paragraphs?",
+    "gold_sql": "SELECT T1.document_id ,  T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_918",
+    "original_id": 918,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "hard",
+    "question": "Which states have both owners and professionals living there?",
+    "gold_sql": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_426",
+    "original_id": 426,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "extra",
+    "question": "What is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?",
+    "gold_sql": "SELECT t1.name FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id JOIN museum AS t3 ON t3.Museum_ID  =  t2.Museum_ID WHERE t3.open_year  <  2009 INTERSECT SELECT t1.name FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id JOIN museum AS t3 ON t3.Museum_ID  =  t2.Museum_ID WHERE t3.open_year  >  2011",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_595",
+    "original_id": 595,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "hard",
+    "question": "Which country has the most of TV Channels? List the country and number of TV Channels it has.",
+    "gold_sql": "SELECT Country ,  count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_882",
+    "original_id": 882,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "Show the student IDs and numbers of friends corresponding to each.",
+    "gold_sql": "SELECT student_id ,  count(*) FROM Friend GROUP BY student_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_353",
+    "original_id": 353,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "What are the distinct template type descriptions for the templates ever used by any document?",
+    "gold_sql": "SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_369",
+    "original_id": 369,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Show all document ids, names and the number of paragraphs in each document.",
+    "gold_sql": "SELECT T1.document_id ,  T2.document_name ,  count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_732",
+    "original_id": 732,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "How many unique languages are spoken in the world?",
+    "gold_sql": "SELECT count(DISTINCT LANGUAGE) FROM countrylanguage",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_468",
+    "original_id": 468,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "What are the names of the winner and loser who played in the longest match?",
+    "gold_sql": "SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_845",
+    "original_id": 845,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "extra",
+    "question": "What is the name of the conductor who has conducted the most orchestras?",
+    "gold_sql": "SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_650",
+    "original_id": 650,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "easy",
+    "question": "What are the earnings of poker players, ordered descending by value?",
+    "gold_sql": "SELECT Earnings FROM poker_player ORDER BY Earnings DESC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_826",
+    "original_id": 826,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "easy",
+    "question": "What are the names of conductors whose nationalities are not \"USA\"?",
+    "gold_sql": "SELECT Name FROM conductor WHERE Nationality != 'USA'",
+    "evidence": ""
+  },
+  {
+    "qid": "bird_mini_281",
+    "original_id": 281,
+    "dataset": "bird",
+    "db_id": "toxicology",
+    "difficulty": "challenging",
+    "question": "Tally the toxicology element of the 4th atom of each molecule that was carcinogenic.",
+    "gold_sql": "SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND SUBSTR(T1.atom_id, -1) = '4' AND LENGTH(T1.atom_id) = 7",
+    "evidence": "label = '+' means molecules are carcinogenic; 4th atom of each molecule refers to substr(atom_id, 7, 1) = '4'; "
+  },
+  {
+    "qid": "bird_mini_1251",
+    "original_id": 1251,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "simple",
+    "question": "How many patients with an Ig G higher than normal?",
+    "gold_sql": "SELECT COUNT(DISTINCT T1.ID) FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID INNER JOIN Examination AS T3 ON T3.ID = T2.ID WHERE T2.IGG >= 2000",
+    "evidence": "Ig G higher than normal refers to IGG >= 2000; Should consider DISTINCT in the final result;"
+  },
+  {
+    "qid": "bird_mini_775",
+    "original_id": 775,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "challenging",
+    "question": "What is the percentage of blue female superheroes among all female superheroes?",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
+    "evidence": "percentage = MULTIPLY(DIVIDE(SUM(colour = 'Blue' WHERE gender = 'Female'), COUNT(gender = 'Female')), 100); blue refers to the color = 'Blue' WHERE skin_colour_id = colour.id; female refers to gender = 'Female';"
+  },
+  {
+    "qid": "bird_mini_1334",
+    "original_id": 1334,
+    "dataset": "bird",
+    "db_id": "student_club",
+    "difficulty": "simple",
+    "question": "List the full name of the Student_Club members that grew up in Illinois state.",
+    "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+    "evidence": "full name of member refers to first_name, last_name"
+  },
+  {
+    "qid": "bird_mini_239",
+    "original_id": 239,
+    "dataset": "bird",
+    "db_id": "toxicology",
+    "difficulty": "simple",
+    "question": "How many connections does the atom 19 have?",
+    "gold_sql": "SELECT COUNT(T.bond_id) FROM connected AS T WHERE SUBSTR(T.atom_id, -2) = '19'",
+    "evidence": "connections refers to bond_id; atom 19 refers to atom_id like 'TR%_19';"
+  },
+  {
+    "qid": "bird_mini_397",
+    "original_id": 397,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "moderate",
+    "question": "What is the mana cost of cards with a normal layout, a 2003 frame version, with a black border color, and available in paper and mtgo?",
+    "gold_sql": "SELECT manaCost FROM cards WHERE availability = 'mtgo,paper' AND borderColor = 'black' AND frameVersion = 2003 AND layout = 'normal'",
+    "evidence": "available in paper and mtgo refers to availability = 'mtgo,paper'; frameVersion = 2003;borderColor = 'black'"
+  },
+  {
+    "qid": "bird_mini_797",
+    "original_id": 797,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "Which superheroes have blue eyes with brown hair?",
+    "gold_sql": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id WHERE T2.colour = 'Blue' AND T3.colour = 'Brown'",
+    "evidence": "which superheroes refers to superhero_name; blue eyes refers to color = 'Blue' and color.id = eye_colour_id; brown hair refers to color = 'Brown' and color.id = hair_colour_id;"
+  },
+  {
+    "qid": "bird_mini_1028",
+    "original_id": 1028,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "challenging",
+    "question": "In Scotland Premier League, which away team won the most during the 2010 season?",
+    "gold_sql": "SELECT teamInfo.team_long_name FROM League AS leagueData INNER JOIN Match AS matchData ON leagueData.id = matchData.league_id INNER JOIN Team AS teamInfo ON matchData.away_team_api_id = teamInfo.team_api_id WHERE leagueData.name = 'Scotland Premier League' AND matchData.season = '2009/2010' AND matchData.away_team_goal - matchData.home_team_goal > 0 GROUP BY matchData.away_team_api_id ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": "Final result should return the Team.team_long_name; Scotland Premier League refers to League.name = 'Scotland Premier League'; away team refers to away_team_api_id; away team that won the most refers to MAX(SUBTRACT(away_team_goal, home_team_goal) > 0); 2010 season refers to season = '2009/2010'; won the most refers to MAX(COUNT(*));"
+  },
+  {
+    "qid": "bird_mini_1175",
+    "original_id": 1175,
+    "dataset": "bird",
+    "db_id": "thrombosis_prediction",
+    "difficulty": "moderate",
+    "question": "How old was the patient who had the highest hemoglobin count at the time of the examination, and what is the doctor's diagnosis?",
+    "gold_sql": "SELECT STRFTIME('%Y', T2.Date) - STRFTIME('%Y', T1.Birthday), T1.Diagnosis FROM Patient AS T1 INNER JOIN Laboratory AS T2 ON T1.ID = T2.ID ORDER BY T2.HGB DESC LIMIT 1",
+    "evidence": "How old the patient refers to SUBTRACT(year(`Examination Date`), year(Birthday)); the highest hemoglobin count refers to MAX(HGB)"
+  },
+  {
+    "qid": "bird_mini_1148",
+    "original_id": 1148,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "question": "What is the percentage of players that are under 180 cm who have an overall strength of more than 70?",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN t2.overall_rating > 70  AND t1.height < 180 THEN t1.id ELSE NULL END) AS REAL) * 100 / COUNT(t1.id) percent FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id ",
+    "evidence": "percentage refers to DIVIDE(COUNT(height < 180 AND overall_rating > 70),COUNT(id)) * 100"
+  },
+  {
+    "qid": "bird_mini_213",
+    "original_id": 213,
+    "dataset": "bird",
+    "db_id": "toxicology",
+    "difficulty": "moderate",
+    "question": "What type of bond is there between the atoms TR004_8 and TR004_20?",
+    "gold_sql": "SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR004_8' AND T2.atom_id2 = 'TR004_20' OR T2.atom_id2 = 'TR004_8' AND T2.atom_id = 'TR004_20'",
+    "evidence": "type of bond refers to bond_type; between the atoms TR004_8 and TR004_20 refers to atom_id = 'TR004_8' AND atom_id2 = 'TR004_20' OR another way around"
+  },
+  {
+    "qid": "bird_mini_532",
+    "original_id": 532,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "simple",
+    "question": "Please list the display names of all the users whose accounts were created in the year 2011.",
+    "gold_sql": "SELECT DisplayName FROM users WHERE STRFTIME('%Y', CreationDate) = '2011'",
+    "evidence": "account created in the year 2011 refers to year(CreationDate) = 2011"
+  },
+  {
+    "qid": "bird_mini_766",
+    "original_id": 766,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "What is the hero's full name with the highest attribute in strength?",
+    "gold_sql": "SELECT T1.full_name FROM superhero AS T1 INNER JOIN hero_attribute AS T2 ON T1.id = T2.hero_id INNER JOIN attribute AS T3 ON T2.attribute_id = T3.id WHERE T3.attribute_name = 'Strength' ORDER BY T2.attribute_value DESC LIMIT 1",
+    "evidence": "highest attribute in strength refers to MAX(attribute_value) WHERE attribute_name = 'strength';"
+  },
+  {
+    "qid": "bird_mini_1079",
+    "original_id": 1079,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "simple",
+    "question": "Which player is the tallest?",
+    "gold_sql": "SELECT player_name FROM Player ORDER BY height DESC LIMIT 1",
+    "evidence": "tallest player refers to MAX(height);"
+  },
+  {
+    "qid": "bird_mini_786",
+    "original_id": 786,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "How many heroes have the highest attribute value in strength?",
+    "gold_sql": "SELECT COUNT(T1.hero_id) FROM hero_attribute AS T1 INNER JOIN attribute AS T2 ON T1.attribute_id = T2.id WHERE T2.attribute_name = 'Strength' AND T1.attribute_value = ( SELECT MAX(attribute_value) FROM hero_attribute )",
+    "evidence": "highest attribute value in strength refers to MAX(attribute_value) WHERE attribute_name = 'Strength';"
+  },
+  {
+    "qid": "bird_mini_753",
+    "original_id": 753,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "Among the superheroes with height from 170 to 190, list the names of the superheroes with no eye color.",
+    "gold_sql": "SELECT DISTINCT T1.superhero_name FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id WHERE T1.height_cm BETWEEN 170 AND 190 AND T2.colour = 'No Colour'",
+    "evidence": "height from 170 to 190 refers to height_cm BETWEEN 170 AND 190; no eye color refers to colour = 'No Colour'"
+  },
+  {
+    "qid": "bird_mini_531",
+    "original_id": 531,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "simple",
+    "question": "Which user has a higher reputation, Harlan or Jarrod Dixon?",
+    "gold_sql": "SELECT DisplayName FROM users WHERE DisplayName IN ('Harlan', 'Jarrod Dixon') AND Reputation = ( SELECT MAX(Reputation) FROM users WHERE DisplayName IN ('Harlan', 'Jarrod Dixon') )",
+    "evidence": "\"Harlan\" and \"Jarrod Dixon\" are both DisplayName; highest reputation refers to Max(Reputation)"
+  },
+  {
+    "qid": "bird_mini_896",
+    "original_id": 896,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "challenging",
+    "question": "Calculate the percentage whereby Hamilton was not at the 1st track of the the f1 circuit since 2010.",
+    "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.position <> 1 THEN T2.position END) AS REAL) * 100 / COUNT(T2.driverStandingsId) FROM races AS T1 INNER JOIN driverStandings AS T2 ON T2.raceId = T1.raceId INNER JOIN drivers AS T3 ON T3.driverId = T2.driverId WHERE T3.surname = 'Hamilton' AND T1.year >= 2010",
+    "evidence": "percentage = DIVIDE(COUNT(raceId) where surname = 'Hamilton' and position>1), (COUNT(raceId) where surname = 'Hamilton'); since 2010 refers to year >= 2010"
+  },
+  {
+    "qid": "bird_mini_1103",
+    "original_id": 1103,
+    "dataset": "bird",
+    "db_id": "european_football_2",
+    "difficulty": "moderate",
+    "question": "What was the overall rating for Aaron Mooy on 2016/2/4?",
+    "gold_sql": "SELECT t2.overall_rating FROM Player AS t1 INNER JOIN Player_Attributes AS t2 ON t1.player_api_id = t2.player_api_id WHERE SUBSTR(t2.`date`, 1, 10) = '2016-02-04' AND t1.player_name = 'Aaron Mooy'",
+    "evidence": "Aaron Mooy refers to player_name = 'Aaron Mooy'; on 2016/2/4 refers to date LIKE '2016-02-04%';"
+  },
+  {
+    "qid": "bird_mini_487",
+    "original_id": 487,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "challenging",
+    "question": "What is the percentage of incredibly powerful cards in the set Coldsnap?",
+    "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.cardKingdomFoilId IS NOT NULL AND T1.cardKingdomId IS NOT NULL THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+    "evidence": "card set Coldsnap refers to name = 'Coldsnap'; foil is incredibly powerful refers to cardKingdomFoilId is not null AND cardKingdomId is not null; the percentage of incredibly powerful cards in the set refers to DIVIDE(SUM(incredibly powerful), SUM(name = 'Coldsnap'))*100"
+  },
+  {
+    "qid": "bird_mini_637",
+    "original_id": 637,
+    "dataset": "bird",
+    "db_id": "codebase_community",
+    "difficulty": "moderate",
+    "question": "State all the tags used by Mark Meckes in his posts that doesn't have comments.",
+    "gold_sql": "SELECT T3.Tags FROM users AS T1 INNER JOIN postHistory AS T2 ON T1.Id = T2.UserId INNER JOIN posts AS T3 ON T3.Id = T2.PostId WHERE T1.DisplayName = 'Mark Meckes' AND T3.CommentCount = 0",
+    "evidence": "used by Mark Meckes refers to DisplayName = 'Mark Meckes'; Doen't have comments refers to CommentCount = 0;"
+  },
+  {
+    "qid": "bird_mini_479",
+    "original_id": 479,
+    "dataset": "bird",
+    "db_id": "card_games",
+    "difficulty": "moderate",
+    "question": "Among the cards with converted mana cost higher than 5 in the set Coldsnap, how many of them have unknown power?",
+    "gold_sql": "SELECT SUM(CASE WHEN T1.power = '*' OR T1.power IS NULL THEN 1 ELSE 0 END) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap' AND T1.convertedManaCost > 5",
+    "evidence": "card set Coldsnap refers to name = 'Coldsnap'; converted mana cost higher than 5 refers to convertedManaCost > 5; unknown power refers to power = '*' or T1.power is null"
+  },
+  {
+    "qid": "bird_mini_1525",
+    "original_id": 1525,
+    "dataset": "bird",
+    "db_id": "debit_card_specializing",
+    "difficulty": "simple",
+    "question": "What is the percentage of the customers who used EUR in 2012/8/25?",
+    "gold_sql": "SELECT CAST(SUM(IIF(T2.Currency = 'EUR', 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-25'",
+    "evidence": "'2012/8/25' can be represented by '2012-08-25'"
+  },
+  {
+    "qid": "bird_mini_728",
+    "original_id": 728,
+    "dataset": "bird",
+    "db_id": "superhero",
+    "difficulty": "moderate",
+    "question": "Rank superheroes from Marvel Comics by their eye color popularity, starting with the most common color.",
+    "gold_sql": "SELECT colour.colour AS EyeColor, COUNT(superhero.id) AS Count, RANK() OVER (ORDER BY COUNT(superhero.id) DESC) AS PopularityRank FROM superhero INNER JOIN colour ON superhero.eye_colour_id = colour.id INNER JOIN publisher ON superhero.publisher_id = publisher.id WHERE publisher.publisher_name = 'Marvel Comics' GROUP BY colour.colour",
+    "evidence": "the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comics'; most common color refers to COUNT(superhero.id) DESC;"
+  },
+  {
+    "qid": "bird_mini_875",
+    "original_id": 875,
+    "dataset": "bird",
+    "db_id": "formula_1",
+    "difficulty": "simple",
+    "question": "Show me the season page of year when the race No. 901 took place.",
+    "gold_sql": "SELECT T2.url FROM races AS T1 INNER JOIN seasons AS T2 ON T2.year = T1.year WHERE T1.raceId = 901",
+    "evidence": "the season page refers to url; race number refers to raceId;"
+  }
+]

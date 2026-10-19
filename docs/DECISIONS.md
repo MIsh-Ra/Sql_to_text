@@ -27,3 +27,11 @@ This document records key design choices, library adaptations, and trade-offs ma
 ### DEC-005: Model Selection for Groq (`openai/gpt-oss-120b`)
 - **Context**: On Groq, `llama-3.3-70b-versatile` returned model not found under the active API key permissions. Querying the Groq `/models` endpoint revealed `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, and `qwen/qwen3.8-27b`.
 - **Decision**: Selected `openai/gpt-oss-120b` on Groq as the primary model. It delivers high-capacity reasoning (120B parameters) and sub-second generation speeds.
+
+### DEC-006: Official Spider Component Hardness Calculation
+- **Context**: Spider `dev.json` does not include explicit difficulty labels in its raw JSON files, unlike BIRD.
+- **Decision**: Implemented the exact official Spider hardness calculation (`count_component1`, `count_component2`, `count_others`) based on the official AST component evaluator from Yale LILY. This ensures stratified sampling for `spider_dev_200` exactly mirrors the difficulty distribution of the full dev benchmark.
+
+### DEC-007: Defense-in-Depth Execution Sandbox
+- **Context**: Executing LLM-generated SQL against SQLite must be safe from file modification, malicious extensions, infinite recursive loops, or PRAGMA attacks.
+- **Decision**: Opened databases via `file:///path?mode=ro`, installed `set_authorizer` granting solely `SQLITE_SELECT`, `SQLITE_READ`, `SQLITE_FUNCTION`, and `SQLITE_RECURSIVE`, and installed a progress handler checking timeouts every 500 virtual machine instructions. Fetched rows are capped without modifying SQL AST.

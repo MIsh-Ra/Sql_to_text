@@ -1,0 +1,502 @@
+[
+  {
+    "qid": "spider_dev_426",
+    "original_id": 426,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "extra",
+    "question": "What is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?",
+    "gold_sql": "SELECT t1.name FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id JOIN museum AS t3 ON t3.Museum_ID  =  t2.Museum_ID WHERE t3.open_year  <  2009 INTERSECT SELECT t1.name FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id JOIN museum AS t3 ON t3.Museum_ID  =  t2.Museum_ID WHERE t3.open_year  >  2011",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_80",
+    "original_id": 80,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "medium",
+    "question": "For students who have pets , how many pets does each student have ? list their ids instead of names .",
+    "gold_sql": "select count(*) ,  t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid group by t1.stuid",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_750",
+    "original_id": 750,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "What is the number of distinct continents where Chinese is spoken?",
+    "gold_sql": "SELECT COUNT( DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"Chinese\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_783",
+    "original_id": 783,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "hard",
+    "question": "Return the codes of countries that do not speak English and do not have Republics for governments.",
+    "gold_sql": "SELECT Code FROM country WHERE GovernmentForm != \"Republic\" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  \"English\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_353",
+    "original_id": 353,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "What are the distinct template type descriptions for the templates ever used by any document?",
+    "gold_sql": "SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_608",
+    "original_id": 608,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "For each language, list the number of TV Channels that use it.",
+    "gold_sql": "SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_631",
+    "original_id": 631,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "Find the package choice and series name of the TV channel that has high definition TV.",
+    "gold_sql": "SELECT package_option ,  series_name FROM TV_Channel WHERE hight_definition_TV  =  \"yes\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_623",
+    "original_id": 623,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "What is the TV Channel of TV series with Episode \"A Love of a Lifetime\"? List the TV Channel's series name.",
+    "gold_sql": "SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = \"A Love of a Lifetime\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_721",
+    "original_id": 721,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "hard",
+    "question": "Give the name of the country in Asia with the lowest life expectancy.",
+    "gold_sql": "SELECT Name FROM country WHERE Continent  =  \"Asia\" ORDER BY LifeExpectancy LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_826",
+    "original_id": 826,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "easy",
+    "question": "What are the names of conductors whose nationalities are not \"USA\"?",
+    "gold_sql": "SELECT Name FROM conductor WHERE Nationality != 'USA'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_138",
+    "original_id": 138,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "What is the average edispl for all volvos?",
+    "gold_sql": "SELECT avg(T2.edispl) FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.Model  =  'volvo';",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_502",
+    "original_id": 502,
+    "dataset": "spider",
+    "db_id": "battle_death",
+    "difficulty": "easy",
+    "question": "How many different results are there for the battles?",
+    "gold_sql": "SELECT count(DISTINCT RESULT) FROM battle",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_836",
+    "original_id": 836,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "easy",
+    "question": "List names of conductors in descending order of years of work.",
+    "gold_sql": "SELECT Name FROM conductor ORDER BY Year_of_Work DESC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_360",
+    "original_id": 360,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Count the number of paragraphs in the document named 'Summer Show'.",
+    "gold_sql": "SELECT count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_ID  =  T2.document_ID WHERE T2.document_name  =  'Summer Show'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_65",
+    "original_id": 65,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "extra",
+    "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+    "gold_sql": "SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_901",
+    "original_id": 901,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "hard",
+    "question": "What are the names of high schoolers who both have friends and are liked?",
+    "gold_sql": "SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id INTERSECT SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.liked_id  =  T2.id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_468",
+    "original_id": 468,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "What are the names of the winner and loser who played in the longest match?",
+    "gold_sql": "SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_940",
+    "original_id": 940,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Which owner has paid the largest amount of money in total for their dogs? Show the owner id and zip code.",
+    "gold_sql": "SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_369",
+    "original_id": 369,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Show all document ids, names and the number of paragraphs in each document.",
+    "gold_sql": "SELECT T1.document_id ,  T2.document_name ,  count(*) FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_831",
+    "original_id": 831,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "easy",
+    "question": "Return the average attendance across all shows.",
+    "gold_sql": "SELECT avg(Attendance) FROM SHOW",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_292",
+    "original_id": 292,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "easy",
+    "question": "What is all the information about hiring?",
+    "gold_sql": "SELECT * FROM hiring",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1009",
+    "original_id": 1009,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "medium",
+    "question": "What are the names of the singers whose birth years are either 1948 or 1949?",
+    "gold_sql": "SELECT Name FROM singer WHERE Birth_Year  =  1948 OR Birth_Year  =  1949",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_916",
+    "original_id": 916,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "extra",
+    "question": "Find the minimum grade of students who have no friends.",
+    "gold_sql": "SELECT min(grade) FROM Highschooler WHERE id NOT IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_882",
+    "original_id": 882,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "Show the student IDs and numbers of friends corresponding to each.",
+    "gold_sql": "SELECT student_id ,  count(*) FROM Friend GROUP BY student_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_620",
+    "original_id": 620,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "easy",
+    "question": "When did the episode \"A Love of a Lifetime\" air?",
+    "gold_sql": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_981",
+    "original_id": 981,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Find the number of owners who do not own any dogs at this moment.",
+    "gold_sql": "SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_373",
+    "original_id": 373,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "extra",
+    "question": "What is the document id and name with greatest number of paragraphs?",
+    "gold_sql": "SELECT T1.document_id ,  T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_268",
+    "original_id": 268,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "medium",
+    "question": "How many shops are there in each location?",
+    "gold_sql": "SELECT count(*) ,  LOCATION FROM shop GROUP BY LOCATION",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_587",
+    "original_id": 587,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "easy",
+    "question": "List all cartoon directed by \"Ben Jones\".",
+    "gold_sql": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_197",
+    "original_id": 197,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "Which city and country is the Alton airport at?",
+    "gold_sql": "SELECT City ,  Country FROM AIRPORTS WHERE AirportName  =  \"Alton\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_737",
+    "original_id": 737,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "How many languages are spoken in Aruba?",
+    "gold_sql": "SELECT COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  \"Aruba\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_803",
+    "original_id": 803,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "Return the names of the 3 most populated countries.",
+    "gold_sql": "SELECT Name FROM country ORDER BY Population DESC LIMIT 3",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_732",
+    "original_id": 732,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "How many unique languages are spoken in the world?",
+    "gold_sql": "SELECT count(DISTINCT LANGUAGE) FROM countrylanguage",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_289",
+    "original_id": 289,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "easy",
+    "question": "What is total bonus given in all evaluations?",
+    "gold_sql": "SELECT sum(bonus) FROM evaluation",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_639",
+    "original_id": 639,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "find the pixel aspect ratio and nation of the tv channels that do not use English.",
+    "gold_sql": "SELECT Pixel_aspect_ratio_PAR ,  country FROM tv_channel WHERE LANGUAGE != 'English'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_731",
+    "original_id": 731,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "Give the mean GNP and total population of nations which are considered US territory.",
+    "gold_sql": "SELECT avg(GNP) ,  sum(population) FROM country WHERE GovernmentForm  =  \"US Territory\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_441",
+    "original_id": 441,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "easy",
+    "question": "find the number of distinct country codes of all players.",
+    "gold_sql": "SELECT count(DISTINCT country_code) FROM players",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_595",
+    "original_id": 595,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "hard",
+    "question": "Which country has the most of TV Channels? List the country and number of TV Channels it has.",
+    "gold_sql": "SELECT Country ,  count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_524",
+    "original_id": 524,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "medium",
+    "question": "What are the names and descriptions for all the sections?",
+    "gold_sql": "SELECT section_name ,  section_description FROM Sections",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_43",
+    "original_id": 43,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "hard",
+    "question": "Find the number of concerts happened in the stadium with the highest capacity .",
+    "gold_sql": "select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_255",
+    "original_id": 255,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "hard",
+    "question": "Find the number of flights landing in the city of Aberdeen or Abilene.",
+    "gold_sql": "SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  =  \"Aberdeen\" OR T2.city  =  \"Abilene\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_408",
+    "original_id": 408,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "medium",
+    "question": "What are the names of the teachers who teach at least two courses?",
+    "gold_sql": "SELECT T2.Name FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID  =  T2.Teacher_ID GROUP BY T2.Name HAVING COUNT(*)  >=  2",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_845",
+    "original_id": 845,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "extra",
+    "question": "What is the name of the conductor who has conducted the most orchestras?",
+    "gold_sql": "SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_918",
+    "original_id": 918,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "hard",
+    "question": "Which states have both owners and professionals living there?",
+    "gold_sql": "SELECT state FROM Owners INTERSECT SELECT state FROM Professionals",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_929",
+    "original_id": 929,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Give me the id, role and email of the professionals who did not perform any treatment on dogs.",
+    "gold_sql": "SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_140",
+    "original_id": 140,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "What is the maximum accelerate for all the different cylinders?",
+    "gold_sql": "SELECT max(Accelerate) ,  Cylinders FROM CARS_DATA GROUP BY Cylinders;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_117",
+    "original_id": 117,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "What is the average miles per gallon(mpg) of the cars with 4 cylinders?",
+    "gold_sql": "SELECT avg(mpg) FROM CARS_DATA WHERE Cylinders  =  4;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_650",
+    "original_id": 650,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "easy",
+    "question": "What are the earnings of poker players, ordered descending by value?",
+    "gold_sql": "SELECT Earnings FROM poker_player ORDER BY Earnings DESC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_481",
+    "original_id": 481,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "Find the number of matches happened in each year.",
+    "gold_sql": "SELECT count(*) ,  YEAR FROM matches GROUP BY YEAR",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_915",
+    "original_id": 915,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "hard",
+    "question": "What is the average grade of students who have friends?",
+    "gold_sql": "SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)",
+    "evidence": ""
+  }
+]

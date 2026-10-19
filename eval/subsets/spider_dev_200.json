@@ -1,0 +1,2002 @@
+[
+  {
+    "qid": "spider_dev_663",
+    "original_id": 663,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "medium",
+    "question": "List the names of poker players ordered by the final tables made in ascending order.",
+    "gold_sql": "SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Final_Table_Made",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_41",
+    "original_id": 41,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "extra",
+    "question": "Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015.",
+    "gold_sql": "SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_753",
+    "original_id": 753,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "hard",
+    "question": "Which regions speak Dutch or English?",
+    "gold_sql": "SELECT DISTINCT T1.Region FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" OR T2.Language  =  \"Dutch\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_741",
+    "original_id": 741,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "extra",
+    "question": "Give the name of the nation that uses the greatest amount of languages.",
+    "gold_sql": "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_57",
+    "original_id": 57,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "extra",
+    "question": "Find the first name of students who have cat or dog pet.",
+    "gold_sql": "SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_381",
+    "original_id": 381,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "easy",
+    "question": "How many teachers are there?",
+    "gold_sql": "SELECT count(*) FROM teacher",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_135",
+    "original_id": 135,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "What is the average horsepower of the cars before 1980?",
+    "gold_sql": "SELECT avg(horsepower) FROM CARS_DATA WHERE YEAR  <  1980;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_264",
+    "original_id": 264,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "medium",
+    "question": "Count the number of employees for each city.",
+    "gold_sql": "SELECT count(*) ,  city FROM employee GROUP BY city",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_449",
+    "original_id": 449,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "List the number of all matches who played in years of 2013 or 2016.",
+    "gold_sql": "SELECT count(*) FROM matches WHERE YEAR  =  2013 OR YEAR  =  2016",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_400",
+    "original_id": 400,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "medium",
+    "question": "What is the name of each teacher and what course they teach?",
+    "gold_sql": "SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_26",
+    "original_id": 26,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "hard",
+    "question": "Which year has most number of concerts?",
+    "gold_sql": "SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_480",
+    "original_id": 480,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "How many total tours were there for each ranking date?",
+    "gold_sql": "SELECT sum(tours) ,  ranking_date FROM rankings GROUP BY ranking_date",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_624",
+    "original_id": 624,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "What is the name of the series that has the episode \"A Love of a Lifetime\"?",
+    "gold_sql": "SELECT T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Episode = \"A Love of a Lifetime\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_541",
+    "original_id": 541,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "Which student has enrolled for the most times in any program? List the id, first name, middle name, last name, the number of enrollments and student id.",
+    "gold_sql": "SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_703",
+    "original_id": 703,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "Give the names of the nations that were founded after 1950.",
+    "gold_sql": "SELECT Name FROM country WHERE IndepYear  >  1950",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_801",
+    "original_id": 801,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "Return the names and surface areas of the 5 largest countries.",
+    "gold_sql": "SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_907",
+    "original_id": 907,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "extra",
+    "question": "Give the name of the student with the most likes.",
+    "gold_sql": "SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_569",
+    "original_id": 569,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "medium",
+    "question": "What is the last transcript release date?",
+    "gold_sql": "SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_40",
+    "original_id": 40,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "medium",
+    "question": "What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?",
+    "gold_sql": "SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_621",
+    "original_id": 621,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "easy",
+    "question": "What is Weekly Rank of TV series with Episode \"A Love of a Lifetime\"?",
+    "gold_sql": "SELECT Weekly_Rank FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_999",
+    "original_id": 999,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "medium",
+    "question": "What are each professional's first name and description of the treatment they have performed?",
+    "gold_sql": "SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_391",
+    "original_id": 391,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "medium",
+    "question": "What is the hometown of the youngest teacher?",
+    "gold_sql": "SELECT Hometown FROM teacher ORDER BY Age ASC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_141",
+    "original_id": 141,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "hard",
+    "question": "Which model has the most version(make) of cars?",
+    "gold_sql": "SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_704",
+    "original_id": 704,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "How many countries have a republic as their form of government?",
+    "gold_sql": "SELECT count(*) FROM country WHERE GovernmentForm  =  \"Republic\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_54",
+    "original_id": 54,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "hard",
+    "question": "How many dog pets are raised by female students?",
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_64",
+    "original_id": 64,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "hard",
+    "question": "What are the ids of the students who do not own cats as pets?",
+    "gold_sql": "SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_409",
+    "original_id": 409,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "hard",
+    "question": "List the names of teachers who have not been arranged to teach courses.",
+    "gold_sql": "SELECT Name FROM teacher WHERE Teacher_id NOT IN (SELECT Teacher_id FROM course_arrange)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_447",
+    "original_id": 447,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "hard",
+    "question": "List the names of all winners who played in both 2013 and 2016.",
+    "gold_sql": "SELECT winner_name FROM matches WHERE YEAR  =  2013 INTERSECT SELECT winner_name FROM matches WHERE YEAR  =  2016",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_395",
+    "original_id": 395,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "hard",
+    "question": "List the most common hometown of teachers.",
+    "gold_sql": "SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_440",
+    "original_id": 440,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "easy",
+    "question": "What is the best rank of losers across all matches?",
+    "gold_sql": "SELECT min(loser_rank) FROM matches",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_419",
+    "original_id": 419,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "medium",
+    "question": "find the id, name and age for visitors who visited some museums more than once.",
+    "gold_sql": "SELECT t1.id ,  t1.name ,  t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id GROUP BY t1.id HAVING count(*)  >  1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_786",
+    "original_id": 786,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "hard",
+    "question": "Which unique cities are in Asian countries where Chinese is the official language ?",
+    "gold_sql": "select distinct t3.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode join city as t3 on t1.code  =  t3.countrycode where t2.isofficial  =  't' and t2.language  =  'chinese' and t1.continent  =  \"asia\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_574",
+    "original_id": 574,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "What is the date and id of the transcript with the least number of results?",
+    "gold_sql": "SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_470",
+    "original_id": 470,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "What are the first names of all players, and their average rankings?",
+    "gold_sql": "SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_257",
+    "original_id": 257,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "hard",
+    "question": "Find the name of airports which do not have any flight in and out.",
+    "gold_sql": "SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_49",
+    "original_id": 49,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "medium",
+    "question": "Find the maximum weight for each type of pet. List the maximum weight and pet type.",
+    "gold_sql": "SELECT max(weight) ,  petType FROM pets GROUP BY petType",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_116",
+    "original_id": 116,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "hard",
+    "question": "What is the count of the car models produced in the United States?",
+    "gold_sql": "SELECT count(*) FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_692",
+    "original_id": 692,
+    "dataset": "spider",
+    "db_id": "voter_1",
+    "difficulty": "easy",
+    "question": "What are the names of the contestants whose names are not 'Jessie Alloway'",
+    "gold_sql": "SELECT contestant_name FROM contestants WHERE contestant_name != 'Jessie Alloway'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_312",
+    "original_id": 312,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "extra",
+    "question": "Return the id and type code of the template that is used for the greatest number of documents.",
+    "gold_sql": "SELECT T1.template_id ,  T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_91",
+    "original_id": 91,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "How many countries are listed?",
+    "gold_sql": "SELECT count(*) FROM COUNTRIES;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_73",
+    "original_id": 73,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "medium",
+    "question": "Find the average weight for each pet type.",
+    "gold_sql": "SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_144",
+    "original_id": 144,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "What is the number of cars with more than 4 cylinders?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE Cylinders  >  4;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_427",
+    "original_id": 427,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "extra",
+    "question": "Find the number of visitors who did not visit any museum opened after 2010.",
+    "gold_sql": "SELECT count(*) FROM visitor WHERE id NOT IN (SELECT t2.visitor_id FROM museum AS t1 JOIN visit AS t2 ON t1.Museum_ID  =  t2.Museum_ID WHERE t1.open_year  >  2010)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_410",
+    "original_id": 410,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "hard",
+    "question": "What are the names of the teachers whose courses have not been arranged?",
+    "gold_sql": "SELECT Name FROM teacher WHERE Teacher_id NOT IN (SELECT Teacher_id FROM course_arrange)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_433",
+    "original_id": 433,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "List the first name and birth date of all players from the country with code USA.",
+    "gold_sql": "SELECT first_name ,  birth_date FROM players WHERE country_code  =  'USA'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_168",
+    "original_id": 168,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "extra",
+    "question": "Among the cars that do not have the minimum horsepower , what are the make ids and names of all those with less than 4 cylinders ?",
+    "gold_sql": "select t2.makeid ,  t2.make from cars_data as t1 join car_names as t2 on t1.id  =  t2.makeid where t1.horsepower  >  (select min(horsepower) from cars_data) and t1.cylinders  <  4;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_696",
+    "original_id": 696,
+    "dataset": "spider",
+    "db_id": "voter_1",
+    "difficulty": "medium",
+    "question": "What are the number of votes from state 'NY' or 'CA'?",
+    "gold_sql": "SELECT count(*) FROM votes WHERE state  =  'NY' OR state  =  'CA'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_774",
+    "original_id": 774,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "extra",
+    "question": "What are the African countries that have a  population less than any country in Asia?",
+    "gold_sql": "SELECT Name FROM country WHERE Continent  =  \"Africa\"  AND population  <  (SELECT max(population) FROM country WHERE Continent  =  \"Asia\")",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_936",
+    "original_id": 936,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Which owner has paid for the most treatments on his or her dogs? List the owner id and last name.",
+    "gold_sql": "SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_314",
+    "original_id": 314,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "easy",
+    "question": "What are the template ids of any templates used in more than a single document?",
+    "gold_sql": "SELECT template_id FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_705",
+    "original_id": 705,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "How many countries have governments that are republics?",
+    "gold_sql": "SELECT count(*) FROM country WHERE GovernmentForm  =  \"Republic\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_644",
+    "original_id": 644,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "hard",
+    "question": "What are the ids of the TV channels that do not have any cartoons directed by Ben Jones?",
+    "gold_sql": "SELECT id FROM TV_Channel EXCEPT SELECT channel FROM cartoon WHERE directed_by  =  'Ben Jones'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_729",
+    "original_id": 729,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "What is the total population of Gelderland district?",
+    "gold_sql": "SELECT sum(Population) FROM city WHERE District  =  \"Gelderland\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_743",
+    "original_id": 743,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "extra",
+    "question": "Which continent speaks the most languages?",
+    "gold_sql": "SELECT T1.Continent FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Continent ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_164",
+    "original_id": 164,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "What is the number of carsw ith over 6 cylinders?",
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_274",
+    "original_id": 274,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "medium",
+    "question": "Sort all the shops by number products in descending order, and return the name, location and district of each shop.",
+    "gold_sql": "SELECT name ,  LOCATION ,  district FROM shop ORDER BY number_products DESC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_126",
+    "original_id": 126,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "What is the number of cars with a horsepower greater than 150?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE horsepower  >  150;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_734",
+    "original_id": 734,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "How many type of governments are in Africa?",
+    "gold_sql": "SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent  =  \"Africa\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_55",
+    "original_id": 55,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "easy",
+    "question": "Find the number of distinct type of pets.",
+    "gold_sql": "SELECT count(DISTINCT pettype) FROM pets",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_3",
+    "original_id": 3,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "medium",
+    "question": "What are the names, countries, and ages for every singer in descending order of age?",
+    "gold_sql": "SELECT name ,  country ,  age FROM singer ORDER BY age DESC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_300",
+    "original_id": 300,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "What are the ids, names, and descriptions for all documents?",
+    "gold_sql": "SELECT document_id ,  document_name ,  document_description FROM Documents",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_219",
+    "original_id": 219,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "hard",
+    "question": "How many United Airlines flights go to City 'Aberdeen'?",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode JOIN AIRLINES AS T3 ON T3.uid  =  T1.Airline WHERE T2.City  =  \"Aberdeen\" AND T3.Airline  =  \"United Airlines\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_867",
+    "original_id": 867,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "easy",
+    "question": "What is the grade of each high schooler?",
+    "gold_sql": "SELECT grade FROM Highschooler",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_225",
+    "original_id": 225,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "extra",
+    "question": "What is the code of airport that has the highest number of flights?",
+    "gold_sql": "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_549",
+    "original_id": 549,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "Find the last name of the students who currently live in the state of North Carolina but have not registered in any degree program.",
+    "gold_sql": "SELECT T1.last_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'NorthCarolina' EXCEPT SELECT DISTINCT T3.last_name FROM Students AS T3 JOIN Student_Enrolment AS T4 ON T3.student_id  =  T4.student_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_113",
+    "original_id": 113,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "How many car makers are there in france?",
+    "gold_sql": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'france';",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_28",
+    "original_id": 28,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "hard",
+    "question": "Show the stadium names without any concert.",
+    "gold_sql": "SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_122",
+    "original_id": 122,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "What are the makers and models?",
+    "gold_sql": "SELECT Maker ,  Model FROM MODEL_LIST;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_95",
+    "original_id": 95,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "hard",
+    "question": "Which model of the car has the minimum horsepower?",
+    "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_576",
+    "original_id": 576,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "What is the id of the semester that had both Masters and Bachelors students enrolled?",
+    "gold_sql": "SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id WHERE degree_summary_name  =  'Master' INTERSECT SELECT DISTINCT T2.semester_id FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id WHERE degree_summary_name  =  'Bachelor'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_142",
+    "original_id": 142,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "hard",
+    "question": "What model has the most different versions?",
+    "gold_sql": "SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_797",
+    "original_id": 797,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "What are the different government forms and what is the total population of each for government forms that have an average life expectancy greater than 72?",
+    "gold_sql": "SELECT sum(Population) ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_561",
+    "original_id": 561,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "Which address holds the most number of students currently? List the address id and all lines.",
+    "gold_sql": "SELECT T1.address_id ,  T1.line_1 ,  T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_21",
+    "original_id": 21,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "medium",
+    "question": "How many concerts occurred in 2014 or 2015?",
+    "gold_sql": "SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_375",
+    "original_id": 375,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "hard",
+    "question": "What is the document id with least number of paragraphs?",
+    "gold_sql": "SELECT document_id FROM Paragraphs GROUP BY document_id ORDER BY count(*) ASC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_365",
+    "original_id": 365,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Show all paragraph texts for the document \"Customer reviews\".",
+    "gold_sql": "SELECT T1.paragraph_text FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id WHERE T2.document_name  =  \"Customer reviews\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_315",
+    "original_id": 315,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "hard",
+    "question": "Show ids for all templates not used by any document.",
+    "gold_sql": "SELECT template_id FROM Templates EXCEPT SELECT template_id FROM Documents",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_548",
+    "original_id": 548,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "What is the name of the course with the most students enrolled?",
+    "gold_sql": "SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_67",
+    "original_id": 67,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "medium",
+    "question": "Find the type and weight of the youngest pet.",
+    "gold_sql": "SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_617",
+    "original_id": 617,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "What is minimum and maximum share of TV series?",
+    "gold_sql": "SELECT max(SHARE) , min(SHARE) FROM TV_series;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_635",
+    "original_id": 635,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "hard",
+    "question": "which countries' tv channels are not playing any cartoon written by Todd Casey?",
+    "gold_sql": "SELECT country FROM TV_Channel EXCEPT SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by  =  'Todd Casey'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_923",
+    "original_id": 923,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Find the id, last name and cell phone of the professionals who live in the state of Indiana or have performed more than two treatments.",
+    "gold_sql": "SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_539",
+    "original_id": 539,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "Find the program which most number of students are enrolled in. List both the id and the summary.",
+    "gold_sql": "SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_607",
+    "original_id": 607,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "List each language and the number of TV Channels using it.",
+    "gold_sql": "SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_513",
+    "original_id": 513,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "easy",
+    "question": "What is the zip code of the address in the city Port Chelsea?",
+    "gold_sql": "SELECT zip_postcode FROM Addresses WHERE city  =  'Port Chelsea'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_821",
+    "original_id": 821,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "Return the codes of countries for which Spanish is the predominantly spoken language.",
+    "gold_sql": "SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_190",
+    "original_id": 190,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "easy",
+    "question": "Return the number of  airports.",
+    "gold_sql": "SELECT count(*) FROM AIRPORTS",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_454",
+    "original_id": 454,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "What is the first name and country code of the oldest player?",
+    "gold_sql": "SELECT first_name ,  country_code FROM players ORDER BY birth_date LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_874",
+    "original_id": 874,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "How many high schoolers are there in grade 9 or 10?",
+    "gold_sql": "SELECT count(*) FROM Highschooler WHERE grade  =  9 OR grade  =  10",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_912",
+    "original_id": 912,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "How many likes does Kyle have?",
+    "gold_sql": "SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  \"Kyle\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_682",
+    "original_id": 682,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "easy",
+    "question": "What are the names of people who are not from Russia?",
+    "gold_sql": "SELECT Name FROM people WHERE Nationality != \"Russia\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1031",
+    "original_id": 1031,
+    "dataset": "spider",
+    "db_id": "real_estate_properties",
+    "difficulty": "medium",
+    "question": "What is the feature type name of feature AirCon?",
+    "gold_sql": "SELECT T2.feature_type_name FROM Other_Available_Features AS T1 JOIN Ref_Feature_Types AS T2 ON T1.feature_type_code  =  T2.feature_type_code WHERE T1.feature_name  =  \"AirCon\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_361",
+    "original_id": 361,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Show paragraph details for paragraph with text 'Korea ' .",
+    "gold_sql": "select other_details from paragraphs where paragraph_text like 'korea'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_187",
+    "original_id": 187,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "easy",
+    "question": "How many airlines do we have?",
+    "gold_sql": "SELECT count(*) FROM AIRLINES",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_451",
+    "original_id": 451,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "extra",
+    "question": "What are the country code and first name of the players who won in both tourney WTA Championships and Australian Open?",
+    "gold_sql": "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_88",
+    "original_id": 88,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "What is the number of continents?",
+    "gold_sql": "SELECT count(*) FROM CONTINENTS;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_834",
+    "original_id": 834,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "easy",
+    "question": "How many different nationalities do conductors have?",
+    "gold_sql": "SELECT count(DISTINCT Nationality) FROM conductor",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_665",
+    "original_id": 665,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "hard",
+    "question": "What is the birth date of the poker player with the lowest earnings?",
+    "gold_sql": "SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_244",
+    "original_id": 244,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "Which airlines have less than 200 flights?",
+    "gold_sql": "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  <  200",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_563",
+    "original_id": 563,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "easy",
+    "question": "On average, when were the transcripts printed?",
+    "gold_sql": "SELECT avg(transcript_date) FROM Transcripts",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_865",
+    "original_id": 865,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "What are the names and grades for each high schooler?",
+    "gold_sql": "SELECT name ,  grade FROM Highschooler",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_616",
+    "original_id": 616,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "What are 3 most highly rated episodes in the TV series table and what were those ratings?",
+    "gold_sql": "SELECT Episode ,  Rating FROM TV_series ORDER BY Rating DESC LIMIT 3;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_133",
+    "original_id": 133,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "hard",
+    "question": "Which model saves the most gasoline? That is to say, have the maximum miles per gallon.",
+    "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.mpg DESC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_991",
+    "original_id": 991,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "medium",
+    "question": "List each charge type and its amount.",
+    "gold_sql": "SELECT charge_type ,  charge_amount FROM Charges",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_843",
+    "original_id": 843,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "medium",
+    "question": "What are the names of conductors who have conducted at more than one orchestra?",
+    "gold_sql": "SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*)  >  1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_611",
+    "original_id": 611,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "List the title of all  Cartoons showed on TV Channel with series name \"Sky Radio\".",
+    "gold_sql": "SELECT T2.Title FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T1.series_name = \"Sky Radio\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_461",
+    "original_id": 461,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "hard",
+    "question": "Find the year that has the most number of matches.",
+    "gold_sql": "SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_736",
+    "original_id": 736,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "What is the total number of languages used in Aruba?",
+    "gold_sql": "SELECT COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  \"Aruba\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_428",
+    "original_id": 428,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "medium",
+    "question": "How many museums were opened after 2013 or before 2008?",
+    "gold_sql": "SELECT count(*) FROM museum WHERE open_year  >  2013 OR open_year  <  2008",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_921",
+    "original_id": 921,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "hard",
+    "question": "Find the average age of the dogs who went through treatments.",
+    "gold_sql": "SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_594",
+    "original_id": 594,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "What are the titles of all cartoons directed by Ben Jones or Brandon Vietti?",
+    "gold_sql": "SELECT Title FROM Cartoon WHERE Directed_by = \"Ben Jones\" OR Directed_by = \"Brandon Vietti\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_556",
+    "original_id": 556,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "medium",
+    "question": "What is the first, middle, and last name of the first student to register?",
+    "gold_sql": "SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_989",
+    "original_id": 989,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "easy",
+    "question": "Tell me the age of the oldest dog.",
+    "gold_sql": "SELECT max(age) FROM Dogs",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_651",
+    "original_id": 651,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "medium",
+    "question": "List the final tables made and the best finishes of poker players.",
+    "gold_sql": "SELECT Final_Table_Made ,  Best_Finish FROM poker_player",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_987",
+    "original_id": 987,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "easy",
+    "question": "Compute the average age of all the dogs.",
+    "gold_sql": "SELECT avg(age) FROM Dogs",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_852",
+    "original_id": 852,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "hard",
+    "question": "List the record company shared by the most number of orchestras.",
+    "gold_sql": "SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_512",
+    "original_id": 512,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "easy",
+    "question": "What are the descriptions for all the math courses?",
+    "gold_sql": "SELECT course_description FROM Courses WHERE course_name  =  'math'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_346",
+    "original_id": 346,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "hard",
+    "question": "What are the codes of template types that are not used for any document?",
+    "gold_sql": "SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_169",
+    "original_id": 169,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "What is the maximum miles per gallon of the car with 8 cylinders or produced before 1980 ?",
+    "gold_sql": "select max(mpg) from cars_data where cylinders  =  8 or year  <  1980",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_615",
+    "original_id": 615,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "List top 3 highest Rating  TV series. List the TV series's Episode and Rating.",
+    "gold_sql": "SELECT Episode ,  Rating FROM TV_series ORDER BY Rating DESC LIMIT 3;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_209",
+    "original_id": 209,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "How many flights arriving in Aberdeen city?",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1007",
+    "original_id": 1007,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "easy",
+    "question": "What are the names of the singers who are not French citizens?",
+    "gold_sql": "SELECT Name FROM singer WHERE Citizenship != \"France\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_838",
+    "original_id": 838,
+    "dataset": "spider",
+    "db_id": "orchestra",
+    "difficulty": "medium",
+    "question": "List the name of the conductor with the most years of work.",
+    "gold_sql": "SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_93",
+    "original_id": 93,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "How many models does each car maker produce? List maker full name, id and the number.",
+    "gold_sql": "SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_626",
+    "original_id": 626,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "medium",
+    "question": "What is the episode for the TV series named \"Sky Radio\"?",
+    "gold_sql": "SELECT T2.Episode FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T1.series_name = \"Sky Radio\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_967",
+    "original_id": 967,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "easy",
+    "question": "Count the number of dogs that went through a treatment.",
+    "gold_sql": "SELECT count(DISTINCT dog_id) FROM Treatments",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_163",
+    "original_id": 163,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "How many cars has over 6 cylinders?",
+    "gold_sql": "SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_934",
+    "original_id": 934,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "What is the name of the breed with the most dogs?",
+    "gold_sql": "SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_781",
+    "original_id": 781,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "Give the country codes for countries in which people speak langauges that are not English.",
+    "gold_sql": "SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != \"English\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_295",
+    "original_id": 295,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "easy",
+    "question": "How many different store locations are there?",
+    "gold_sql": "SELECT count(DISTINCT LOCATION) FROM shop",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_868",
+    "original_id": 868,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "easy",
+    "question": "What grade is Kyle in?",
+    "gold_sql": "SELECT grade FROM Highschooler WHERE name  =  \"Kyle\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_143",
+    "original_id": 143,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "easy",
+    "question": "How many cars have more than 4 cylinders?",
+    "gold_sql": "SELECT count(*) FROM CARS_DATA WHERE Cylinders  >  4;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_876",
+    "original_id": 876,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "Show the number of high schoolers for each grade.",
+    "gold_sql": "SELECT grade ,  count(*) FROM Highschooler GROUP BY grade",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_53",
+    "original_id": 53,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "hard",
+    "question": "Find the number of dog pets that are raised by female students (with sex F).",
+    "gold_sql": "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_68",
+    "original_id": 68,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "medium",
+    "question": "What type of pet is the youngest animal, and how much does it weigh?",
+    "gold_sql": "SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_240",
+    "original_id": 240,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "extra",
+    "question": "Which airlines have departures from CVO but not from APG airports?",
+    "gold_sql": "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  \"CVO\" EXCEPT SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.SourceAirport  =  \"APG\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_712",
+    "original_id": 712,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "extra",
+    "question": "Which language is the most popular in Aruba?",
+    "gold_sql": "SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  \"Aruba\" ORDER BY Percentage DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_534",
+    "original_id": 534,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "medium",
+    "question": "What are the first, middle, and last names, along with the ids, of all students who enrolled in 2 degree programs in one semester?",
+    "gold_sql": "SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_309",
+    "original_id": 309,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Show all template ids and number of documents using each template.",
+    "gold_sql": "SELECT template_id ,  count(*) FROM Documents GROUP BY template_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_526",
+    "original_id": 526,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "medium",
+    "question": "What are the names and ids of every course with less than 2 sections?",
+    "gold_sql": "SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(*)  <=  2",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_793",
+    "original_id": 793,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "What are the names of countries that speak more than 2 languages, as well as how many languages they speak?",
+    "gold_sql": "SELECT COUNT(T2.Language) ,  T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name HAVING COUNT(*)  >  2",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1033",
+    "original_id": 1033,
+    "dataset": "spider",
+    "db_id": "real_estate_properties",
+    "difficulty": "hard",
+    "question": "What are the names of properties that are either houses or apartments with more than 1 room?",
+    "gold_sql": "SELECT property_name FROM Properties WHERE property_type_code  =  \"House\" UNION SELECT property_name FROM Properties WHERE property_type_code  =  \"Apartment\" AND room_count  >  1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_317",
+    "original_id": 317,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "easy",
+    "question": "How many templates do we have?",
+    "gold_sql": "SELECT count(*) FROM Templates",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_995",
+    "original_id": 995,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "medium",
+    "question": "What are the email, cell phone and home phone of each professional?",
+    "gold_sql": "SELECT email_address ,  cell_number ,  home_phone FROM professionals",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_363",
+    "original_id": 363,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Show all paragraph ids and texts for the document with name 'Welcome to NY'.",
+    "gold_sql": "SELECT T1.paragraph_id ,   T1.paragraph_text FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id WHERE T2.Document_Name  =  'Welcome to NY'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_904",
+    "original_id": 904,
+    "dataset": "spider",
+    "db_id": "network_1",
+    "difficulty": "medium",
+    "question": "Show the names of high schoolers who have likes, and numbers of likes for each.",
+    "gold_sql": "SELECT T2.name ,  count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_299",
+    "original_id": 299,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "List document IDs, document names, and document descriptions for all documents.",
+    "gold_sql": "SELECT document_id ,  document_name ,  document_description FROM Documents",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_165",
+    "original_id": 165,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "extra",
+    "question": "For the cars with 4 cylinders, which model has the largest horsepower?",
+    "gold_sql": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Cylinders  =  4 ORDER BY T2.horsepower DESC LIMIT 1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_254",
+    "original_id": 254,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "Give the flight numbers of flights arriving in Aberdeen.",
+    "gold_sql": "SELECT T1.FlightNo FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport   =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_330",
+    "original_id": 330,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "What are the different template type codes, and how many templates correspond to each?",
+    "gold_sql": "SELECT template_type_code ,  count(*) FROM Templates GROUP BY template_type_code",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_986",
+    "original_id": 986,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "easy",
+    "question": "What is the average age of all the dogs?",
+    "gold_sql": "SELECT avg(age) FROM Dogs",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_776",
+    "original_id": 776,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "extra",
+    "question": "Which Asian countries have a population that is larger than any country in Africa?",
+    "gold_sql": "SELECT Name FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT max(population) FROM country WHERE Continent  =  \"Africa\")",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_403",
+    "original_id": 403,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "hard",
+    "question": "Show the name of the teacher for the math course.",
+    "gold_sql": "SELECT T3.Name FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID WHERE T2.Course  =  \"Math\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_425",
+    "original_id": 425,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "medium",
+    "question": "What is the total ticket expense of the visitors whose membership level is 1?",
+    "gold_sql": "SELECT sum(t2.Total_spent) FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id WHERE t1.Level_of_membership  =  1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_389",
+    "original_id": 389,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "medium",
+    "question": "Show the name of teachers aged either 32 or 33?",
+    "gold_sql": "SELECT Name FROM teacher WHERE Age  =  32 OR Age  =  33",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_780",
+    "original_id": 780,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "easy",
+    "question": "What are the country codes of countries where people use languages other than English?",
+    "gold_sql": "SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != \"English\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_16",
+    "original_id": 16,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "medium",
+    "question": "What is the maximum capacity and the average of all stadiums ?",
+    "gold_sql": "select max(capacity), average from stadium",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_235",
+    "original_id": 235,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "What are airlines that have flights arriving at airport 'AHD'?",
+    "gold_sql": "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline WHERE T2.DestAirport  =  \"AHD\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_510",
+    "original_id": 510,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "easy",
+    "question": "How many courses are there?",
+    "gold_sql": "SELECT count(*) FROM Courses",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_484",
+    "original_id": 484,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "What are the names and ranks of the three youngest winners across all matches?",
+    "gold_sql": "SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_401",
+    "original_id": 401,
+    "dataset": "spider",
+    "db_id": "course_teach",
+    "difficulty": "hard",
+    "question": "Show names of teachers and the courses they are arranged to teach in ascending alphabetical order of the teacher's name.",
+    "gold_sql": "SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_313",
+    "original_id": 313,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "easy",
+    "question": "Show ids for all templates that are used by more than one document.",
+    "gold_sql": "SELECT template_id FROM Documents GROUP BY template_id HAVING count(*)  >  1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1004",
+    "original_id": 1004,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "medium",
+    "question": "What are the birth year and citizenship of singers?",
+    "gold_sql": "SELECT Birth_Year ,  Citizenship FROM singer",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_458",
+    "original_id": 458,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "What are the full names of all left handed players, in order of birth date?",
+    "gold_sql": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_62",
+    "original_id": 62,
+    "dataset": "spider",
+    "db_id": "pets_1",
+    "difficulty": "extra",
+    "question": "What major is every student who does not own a cat as a pet, and also how old are they?",
+    "gold_sql": "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1010",
+    "original_id": 1010,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "medium",
+    "question": "What is the name of the singer with the largest net worth?",
+    "gold_sql": "SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_270",
+    "original_id": 270,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "medium",
+    "question": "What are the manager name and district of the shop that sells the largest number of products?",
+    "gold_sql": "SELECT manager_name ,  district FROM shop ORDER BY number_products DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_213",
+    "original_id": 213,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "How many flights does airline 'JetBlue Airways' have?",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRLINES AS T2 ON T1.Airline  =  T2.uid WHERE T2.Airline = \"JetBlue Airways\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_751",
+    "original_id": 751,
+    "dataset": "spider",
+    "db_id": "world_1",
+    "difficulty": "medium",
+    "question": "How many continents speak Chinese?",
+    "gold_sql": "SELECT COUNT( DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"Chinese\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_698",
+    "original_id": 698,
+    "dataset": "spider",
+    "db_id": "voter_1",
+    "difficulty": "extra",
+    "question": "What is the area code in which the most voters voted?",
+    "gold_sql": "SELECT T1.area_code FROM area_code_state AS T1 JOIN votes AS T2 ON T1.state  =  T2.state GROUP BY T1.area_code ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1011",
+    "original_id": 1011,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "medium",
+    "question": "What is the name of the singer who is worth the most?",
+    "gold_sql": "SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_679",
+    "original_id": 679,
+    "dataset": "spider",
+    "db_id": "poker_player",
+    "difficulty": "medium",
+    "question": "List the names and birth dates of people in ascending alphabetical order of name.",
+    "gold_sql": "SELECT Name ,  Birth_Date FROM people ORDER BY Name ASC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_565",
+    "original_id": 565,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "medium",
+    "question": "When is the first transcript released? List the date and details.",
+    "gold_sql": "SELECT transcript_date ,  other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_961",
+    "original_id": 961,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "extra",
+    "question": "Who owns the youngest dog? Give me his or her last name.",
+    "gold_sql": "SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_478",
+    "original_id": 478,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "easy",
+    "question": "What are the codes of countries with more than 50 players?",
+    "gold_sql": "SELECT country_code FROM players GROUP BY country_code HAVING count(*)  >  50",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_584",
+    "original_id": 584,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "hard",
+    "question": "What are the first names of the students who live in Haiti permanently or have the cell phone number 09700166582 ?",
+    "gold_sql": "select t1.first_name from students as t1 join addresses as t2 on t1.permanent_address_id  =  t2.address_id where t2.country  =  'haiti' or t1.cell_mobile_number  =  '09700166582'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_354",
+    "original_id": 354,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "Return the different descriptions for templates that have been used in a document.",
+    "gold_sql": "SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_457",
+    "original_id": 457,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "List the first and last name of all players who are left / L hand in the order of birth date.",
+    "gold_sql": "SELECT first_name ,  last_name FROM players WHERE hand  =  'L' ORDER BY birth_date",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1002",
+    "original_id": 1002,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "easy",
+    "question": "List the name of singers in ascending order of net worth.",
+    "gold_sql": "SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_124",
+    "original_id": 124,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "What are the names and ids of all countries with at least one car maker?",
+    "gold_sql": "SELECT T1.CountryName ,  T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.CountryId HAVING count(*)  >=  1;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_460",
+    "original_id": 460,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "hard",
+    "question": "What is the first name and country code of the player with the most tours?",
+    "gold_sql": "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id ORDER BY T2.tours DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_262",
+    "original_id": 262,
+    "dataset": "spider",
+    "db_id": "employee_hire_evaluation",
+    "difficulty": "easy",
+    "question": "List the names of employees and sort in ascending order of age.",
+    "gold_sql": "SELECT name FROM employee ORDER BY age",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_503",
+    "original_id": 503,
+    "dataset": "spider",
+    "db_id": "battle_death",
+    "difficulty": "extra",
+    "question": "How many battles did not lose any ship with tonnage '225'?",
+    "gold_sql": "SELECT count(*) FROM battle WHERE id NOT IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_204",
+    "original_id": 204,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "easy",
+    "question": "Count the number of flights departing from 'APG'.",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS WHERE SourceAirport  =  \"APG\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_956",
+    "original_id": 956,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "medium",
+    "question": "Which dogs are owned by someone who lives in Virginia? List the owner's first name and the dog's name.",
+    "gold_sql": "SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_210",
+    "original_id": 210,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "medium",
+    "question": "Return the number of flights arriving in Aberdeen.",
+    "gold_sql": "SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  \"Aberdeen\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_445",
+    "original_id": 445,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "easy",
+    "question": "Find the name of tourney that has more than 10 matches.",
+    "gold_sql": "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*)  >  10",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_463",
+    "original_id": 463,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "hard",
+    "question": "Find the name and rank points of the winner who won the most times.",
+    "gold_sql": "SELECT winner_name ,  winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_323",
+    "original_id": 323,
+    "dataset": "spider",
+    "db_id": "cre_Doc_Template_Mgt",
+    "difficulty": "medium",
+    "question": "What are the ids of templates with template type code PP or PPT?",
+    "gold_sql": "SELECT template_id FROM Templates WHERE template_type_code  =  \"PP\" OR template_type_code  =  \"PPT\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_232",
+    "original_id": 232,
+    "dataset": "spider",
+    "db_id": "flight_2",
+    "difficulty": "extra",
+    "question": "What is the abbreviation of the airilne has the fewest flights and what country is it in?",
+    "gold_sql": "SELECT T1.Abbreviation ,  T1.Country FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_149",
+    "original_id": 149,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "medium",
+    "question": "Which makers designed more than 3 car models? List full name and the id.",
+    "gold_sql": "SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_97",
+    "original_id": 97,
+    "dataset": "spider",
+    "db_id": "car_1",
+    "difficulty": "extra",
+    "question": "Find the model of the car whose weight is below the average weight.",
+    "gold_sql": "SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_474",
+    "original_id": 474,
+    "dataset": "spider",
+    "db_id": "wta_1",
+    "difficulty": "medium",
+    "question": "How many players are from each country?",
+    "gold_sql": "SELECT count(*) ,  country_code FROM players GROUP BY country_code",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_29",
+    "original_id": 29,
+    "dataset": "spider",
+    "db_id": "concert_singer",
+    "difficulty": "hard",
+    "question": "What are the names of the stadiums without any concerts?",
+    "gold_sql": "SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_619",
+    "original_id": 619,
+    "dataset": "spider",
+    "db_id": "tvshow",
+    "difficulty": "easy",
+    "question": "What is the air date of TV series with Episode \"A Love of a Lifetime\"?",
+    "gold_sql": "SELECT Air_Date FROM TV_series WHERE Episode = \"A Love of a Lifetime\";",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_964",
+    "original_id": 964,
+    "dataset": "spider",
+    "db_id": "dog_kennels",
+    "difficulty": "medium",
+    "question": "What are the arriving date and the departing date of all the dogs?",
+    "gold_sql": "SELECT date_arrived ,  date_departed FROM Dogs",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_1006",
+    "original_id": 1006,
+    "dataset": "spider",
+    "db_id": "singer",
+    "difficulty": "easy",
+    "question": "List the name of singers whose citizenship is not \"France\".",
+    "gold_sql": "SELECT Name FROM singer WHERE Citizenship != \"France\"",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_416",
+    "original_id": 416,
+    "dataset": "spider",
+    "db_id": "museum_visit",
+    "difficulty": "easy",
+    "question": "Find the average number of staff working for the museums that were open before 2009.",
+    "gold_sql": "SELECT avg(num_of_staff) FROM museum WHERE open_year  <  2009",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_529",
+    "original_id": 529,
+    "dataset": "spider",
+    "db_id": "student_transcripts_tracking",
+    "difficulty": "extra",
+    "question": "What is the semester which most student registered in? Show both the name and the id.",
+    "gold_sql": "SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1",
+    "evidence": ""
+  },
+  {
+    "qid": "spider_dev_687",
+    "original_id": 687,
+    "dataset": "spider",
+    "db_id": "voter_1",
+    "difficulty": "easy",
+    "question": "How many states are there?",
+    "gold_sql": "SELECT count(*) FROM area_code_state",
+    "evidence": ""
+  }
+]

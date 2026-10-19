@@ -1,0 +1,31 @@
+# Model pricing configuration (per 1,000,000 tokens in USD)
+# Update these placeholders with your provider's actual pricing tier.
+
+models:
+  # Groq pricing (placeholders for user to configure)
+  openai/gpt-oss-120b:
+    input_per_m: 0.15      # Placeholder: $0.15 / 1M input tokens
+    output_per_m: 0.60     # Placeholder: $0.60 / 1M output tokens
+
+  openai/gpt-oss-20b:
+    input_per_m: 0.05
+    output_per_m: 0.20
+
+  llama-3.3-70b-versatile:
+    input_per_m: 0.59
+    output_per_m: 0.79
+
+  # Google Gemini pricing (placeholders)
+  gemini-2.5-flash:
+    input_per_m: 0.075
+    output_per_m: 0.30
+
+  # OpenAI pricing (placeholders)
+  gpt-4o-mini:
+    input_per_m: 0.15
+    output_per_m: 0.60
+
+default:
+  input_per_m: 0.15
+  output_per_m: 0.60
+
