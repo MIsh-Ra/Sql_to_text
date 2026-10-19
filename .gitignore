@@ -1,0 +1,29 @@
+# Environment and keys
+.env
+.venv/
+env/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ruff_cache/
+
+# Datasets and local caches (except demo_data)
+data/
+cache/
+.cache/
+eval_cache/
+*.sqlite3
+checkpoints.sqlite*
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
