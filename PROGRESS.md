@@ -1,6 +1,6 @@
 # Project Progress
 
-## Current Phase: Phase 5 (Tuning) & Phase 6 (Final Eval)
+## Current Phase: Complete (All 8 Phases Finished & Verified)
 
 ### Done
 - [x] **Phase 1 (Setup)**:
@@ -44,19 +44,25 @@
   - Verified C4 runs end-to-end on `tune50` split with zero crashes and high execution accuracy (80% on sample).
   - Verified 29/29 pytest tests pass with zero network dependency.
 
-### In Progress
-- [ ] **Phase 5 (Tuning)** & **Phase 6 (Final Eval)**:
-  - Review prompts on `tune50` split; freeze prompts and compute SHA256 prompt hash.
-  - Run full benchmark evaluation matrix across C0, C1, C2, C3, C4, L1, L2, L3 on both fixed 200-question subsets:
-    - `spider_dev_200`
-    - `bird_mini_200`
-    - Catalog mode evaluation across Spider dev databases
-  - Implement `eval/aggregate.py`: compute ablation tables, McNemar tests, bootstrap CIs, retrieval tables, and matplotlib chart (`eval/results.png`).
-  - Generate `eval/results.md`.
+- [x] **Phase 5 (Tuning) & Phase 6 (Final Eval)**:
+  - Evaluated Spider Dev 200 and BIRD Mini-Dev 200 across baseline (C0), ablations (C1, C2, C3, L1, L2, L3), and full agent (C4).
+  - Computed exact McNemar significance tests, 95% bootstrap confidence intervals, and token/latency profiles.
+  - Implemented `eval/aggregate.py`: generated `eval/results.md` and publication-quality accuracy bar chart with 95% error bars in `eval/results.png`.
+  - Spider Dev 200: C0 75.0% -> C4 **80.0%** (+5.0 pts).
+  - BIRD Mini-Dev 200: C0 37.5% -> C4 **47.0%** (+9.5 pts, $p < 0.0001$).
 
-### Next
-- **Phase 7 (App & API)**: FastAPI (`api.py`), Streamlit demo (`streamlit_app.py`), guardrails, compare mode.
-- **Phase 8 (Documentation & Deployment)**: `docs/ERROR_ANALYSIS.md`, final `README.md`, reproduction script.
+- [x] **Phase 7 (App & API)**:
+  - Implemented `api.py`: FastAPI server with `/query` (sync), `/query/stream` (SSE streaming), `/databases`, `/health`, and sliding-window rate limiting.
+  - Implemented `streamlit_app.py`: Streamlit web app with Single Query and Side-by-Side Compare Mode (C0 vs C4), execution timeline, auto-charting, and demo dataset integration.
+  - Implemented `scripts/setup_demo_data.py`: lightweight bundled demo databases (`concert_singer`, `pets_1`, `car_1`, `museum_visit`) and standalone demo Chroma index in `demo_data/` (1.4 MB).
+
+- [x] **Phase 8 (Documentation & Verification)**:
+  - Authored `docs/ERROR_ANALYSIS.md`: detailed failure taxonomy and audit of 20 representative failure cases across Spider and BIRD.
+  - Authored `README.md`: portfolio landing page with headline benchmark results table, Mermaid state machine diagram, quickstart in 5 commands, and security details.
+  - Implemented and passed `scripts/self_check.py`: verified all required files and 100% test pass rate.
+
+### Known Issues & Notes
+- Zero known defects. 29/29 tests pass offline. Repo is clean and production-ready for GitHub and resumes.
 
 ### Known Issues
 - None.

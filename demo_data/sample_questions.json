@@ -1,0 +1,30 @@
+{
+  "concert_singer": [
+    "How many singers do we have?",
+    "What is the average, minimum, and maximum age of all singers?",
+    "List the names of singers who have performed in more than one concert.",
+    "Find the name and song release year for the oldest singer.",
+    "Show the stadium names and their capacities where concerts took place in 2014."
+  ],
+  "pets_1": [
+    "How many students have pets?",
+    "What is the average weight of pets by pet type?",
+    "List the first and last names of students who own a dog.",
+    "Which pet is the oldest?",
+    "Show the student id and pet count for each student who has more than one pet."
+  ],
+  "car_1": [
+    "How many car models are there?",
+    "List all car makers and their countries of origin.",
+    "What is the average horsepower of cars produced after 1980?",
+    "Find the model and year of the car with the highest MPG.",
+    "Count how many cars were produced by American manufacturers."
+  ],
+  "museum_visit": [
+    "How many museums are open?",
+    "List the names of all visitors who visited in 2023.",
+    "What is the name of the visitor who spent the most money?",
+    "Show the museum names and ticket prices ordered by price descending.",
+    "Which museum was visited by both Alice and Bob?"
+  ]
+}

@@ -84,7 +84,7 @@ class SchemaIndex:
 
     def index_database(self, db_id: str, db_path: Optional[Path] = None) -> None:
         """Index all tables and columns for a given SQLite database."""
-        path = db_path or get_db_path(db_id)
+        path = (db_path or get_db_path(db_id)).resolve()
         if not path.exists():
             return
 
@@ -113,7 +113,7 @@ class SchemaIndex:
                 except Exception:
                     pass
 
-        conn = sqlite3.connect(f"file:///{path.as_posix()}?mode=ro", uri=True)
+        conn = sqlite3.connect(f"{path.as_uri()}?mode=ro", uri=True)
         cursor = conn.cursor()
 
         try:
