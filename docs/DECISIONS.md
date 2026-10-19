@@ -43,3 +43,7 @@ This document records key design choices, library adaptations, and trade-offs ma
 ### DEC-009: Strict Cross-Domain Database Exclusion in Few-Shot Retrieval
 - **Context**: In benchmark evaluation, demonstrating few-shot examples from the same database being tested would constitute data leakage / in-domain contamination.
 - **Decision**: In `app/fewshot_index.py`, candidate examples are queried and strictly filtered out if `example.db_id == query.db_id`. Unit tests in `tests/test_retrieval.py` enforce that even the most semantically identical questions are discarded if they share the target database ID.
+
+### DEC-010: State Machine Loop Guard and Checkpointing
+- **Context**: In an autonomous repair loop, LLMs occasionally repeat identical invalid queries, which wastes tokens and causes infinite loops without making progress.
+- **Decision**: Implemented an explicit loop guard in `app/graph.py`: if a repaired query matches any earlier attempt in `state["history"]`, the graph halts immediately and transitions to `fail`. The graph compiles with an SQLite checkpointer (`data/checkpoints.sqlite`), allowing session resumption and time-travel replay.

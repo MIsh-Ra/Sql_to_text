@@ -1,6 +1,6 @@
 # Project Progress
 
-## Current Phase: Phase 4 (Agent)
+## Current Phase: Phase 5 (Tuning) & Phase 6 (Final Eval)
 
 ### Done
 - [x] **Phase 1 (Setup)**:
@@ -33,22 +33,30 @@
   - Passed acceptance check:
     - Spider Dev 200: **100.00% Table Recall@k**.
     - BIRD Mini 200: **99.37% Table Recall@k**, with **26.03% Token Reduction** against full schema.
-  - Verified 24/24 pytest tests pass and ruff is clean.
+
+- [x] **Phase 4 (Agent)**:
+  - Implemented comprehensive scripted unit tests in `tests/test_graph.py` covering:
+    - Success path
+    - Repair path
+    - Exhaustion path
+    - Identical-SQL loop guard
+    - Baseline C0 flags (skipping retrieval and repair)
+  - Verified C4 runs end-to-end on `tune50` split with zero crashes and high execution accuracy (80% on sample).
+  - Verified 29/29 pytest tests pass with zero network dependency.
 
 ### In Progress
-- [ ] **Phase 4 (Agent)**:
-  - Scripted unit tests in `tests/test_graph.py` with fake LLM covering:
-    - Success path (direct generate -> validate -> execute -> summarize)
-    - Repair path (failing SQL repaired and re-validated)
-    - Exhaustion path (repair attempts reach max_attempts -> fail)
-    - Identical-SQL loop guard (repair returns identical SQL -> immediate fail)
-    - Baseline flags (skipping retrieval and repair in C0)
-  - Run C4 on `tune50` questions with zero crashes.
-  - Acceptance check: C4 runs smoothly on tuning questions, and scripted tests cover every graph route.
+- [ ] **Phase 5 (Tuning)** & **Phase 6 (Final Eval)**:
+  - Review prompts on `tune50` split; freeze prompts and compute SHA256 prompt hash.
+  - Run full benchmark evaluation matrix across C0, C1, C2, C3, C4, L1, L2, L3 on both fixed 200-question subsets:
+    - `spider_dev_200`
+    - `bird_mini_200`
+    - Catalog mode evaluation across Spider dev databases
+  - Implement `eval/aggregate.py`: compute ablation tables, McNemar tests, bootstrap CIs, retrieval tables, and matplotlib chart (`eval/results.png`).
+  - Generate `eval/results.md`.
 
 ### Next
-- **Phase 5 (Tuning)**: Prompt refinement on `tune50` split only; freeze prompts and record SHA256 prompt hash.
-- **Phase 6 (Final eval)**: Run full benchmarks C0-C4 and L1-L3 on both `eval200` subsets, catalog mode comparison, and aggregate results.
+- **Phase 7 (App & API)**: FastAPI (`api.py`), Streamlit demo (`streamlit_app.py`), guardrails, compare mode.
+- **Phase 8 (Documentation & Deployment)**: `docs/ERROR_ANALYSIS.md`, final `README.md`, reproduction script.
 
 ### Known Issues
 - None.
