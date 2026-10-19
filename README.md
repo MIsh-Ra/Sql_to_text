@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ Portfolio Text-to-SQL Agent
+# Portfolio Text-to-SQL Agent
 
 **A Text-to-SQL Agent with Hybrid Schema Retrieval, AST Sandboxing, and LangGraph Self-Correction Evaluated on Spider and BIRD Benchmarks.**
 
@@ -13,7 +13,7 @@
 
 ---
 
-## 🎯 Headline Empirical Results
+## Headline Empirical Results
 
 Every metric reported below is generated from an evaluation run on frozen 200-question subsets of **Spider Dev** and **BIRD Mini-Dev** (seed `42`, temperature `0.0`, evaluated with `openai/gpt-oss-120b` via Groq).
 
@@ -31,7 +31,7 @@ Every metric reported below is generated from an evaluation run on frozen 200-qu
 
 ---
 
-## 🏗️ Architecture & Orchestration
+## Architecture & Orchestration
 
 The agent is implemented as a stateful cyclical state machine using **LangGraph** with a **SqliteSaver** checkpointer.
 
@@ -63,7 +63,7 @@ flowchart TD
 
 ---
 
-## 🔬 Comprehensive Ablation Study
+## Comprehensive Ablation Study
 
 Ablations isolating the impact of each subsystem on Spider Dev (200 Questions) and BIRD Mini-Dev (200 Questions):
 
@@ -80,7 +80,7 @@ Ablations isolating the impact of each subsystem on Spider Dev (200 Questions) a
 
 ---
 
-## 🛡️ Security & Sandbox Engineering
+## Security & Sandbox Engineering
 
 All generated SQL statements are treated as **untrusted, hostile input**:
 1. **URI-Level Read-Only Mount**: SQLite connections are opened with `mode=ro` (`file:///path?mode=ro`).
@@ -93,7 +93,7 @@ All generated SQL statements are treated as **untrusted, hostile input**:
 
 ---
 
-## ⚡ Quickstart in 5 Commands
+## Quickstart in 5 Commands
 
 ### 1. Clone & Set Up Environment
 ```bash
@@ -136,7 +136,7 @@ uvicorn api:app --host 0.0.0.0 --port 8000
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 ├── app/
@@ -161,7 +161,7 @@ uvicorn api:app --host 0.0.0.0 --port 8000
 ├── docs/
 │   ├── DECISIONS.md          # Architectural Decision Records (ADRs)
 │   └── ERROR_ANALYSIS.md     # In-depth diagnostic audit of 20 failure cases
-├── api.py                    # Production FastAPI backend (Sync & SSE streaming endpoints)
+├── api.py                    # FastAPI backend (Sync & SSE streaming endpoints)
 ├── streamlit_app.py          # Streamlit UI with Side-by-Side Compare Mode (C0 vs C4)
 ├── requirements.txt          # Pinned exact dependencies
 └── LICENSE                   # MIT License
@@ -169,7 +169,7 @@ uvicorn api:app --host 0.0.0.0 --port 8000
 
 ---
 
-## 🔍 Error Analysis & Diagnostic Audit
+## Error Analysis & Diagnostic Audit
 
 For a comprehensive breakdown of the remaining failure modes on Spider and BIRD, see [docs/ERROR_ANALYSIS.md](docs/ERROR_ANALYSIS.md).
 
@@ -180,7 +180,7 @@ Key diagnostic themes include:
 
 ---
 
-## 📜 Architectural Decisions (ADRs)
+## Architectural Decisions (ADRs)
 
 All design tradeoffs, library choices, and engineering rationale are tracked in [docs/DECISIONS.md](docs/DECISIONS.md):
 - **ADR-001**: Single Unified LLM Factory (`app/llm.py`) with Zero Leaked SDKs.
@@ -192,7 +192,7 @@ All design tradeoffs, library choices, and engineering rationale are tracked in 
 
 ---
 
-## 📄 License & Attribution
+## License & Attribution
 
 This project is open-source software licensed under the [MIT License](LICENSE).
 
